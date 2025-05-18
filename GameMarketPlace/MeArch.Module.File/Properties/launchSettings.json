@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MeArch.Module.File": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51469;http://localhost:51471"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MeArch.Module.Strategy": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51468;http://localhost:51470"
+    }
+  }
+}
