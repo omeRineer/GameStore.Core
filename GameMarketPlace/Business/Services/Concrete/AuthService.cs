@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Business.Services.Abstract;
 using Core.Utilities.ResultTool;
-using DataAccess.Concrete.EntityFramework.General;
+using DataAccess.Concrete.EntityFramework.General.Identity;
 using MeArch.Module.Security.Model.UserIdentity;
 using MeArch.Module.Security.Service;
-using Models.Auth.Login;
+using Models.Identity.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace Business.Services.Concrete
             var user = await _userRepository.GetByUserNameAndPassword(request.UserName, request.Password);
 
             if (user == null)
-                return new ErrorDataResult<UserLoginResponse>();
+                return new ErrorDataResult<UserLoginResponse>("Kullanıcı bulunamadı");
 
 
             var roles = user.UserRoles?.Select(s => s.Role).ToList();

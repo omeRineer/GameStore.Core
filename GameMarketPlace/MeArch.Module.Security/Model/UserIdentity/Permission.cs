@@ -9,7 +9,8 @@ namespace MeArch.Module.Security.Model.UserIdentity
 {
     public class Permission : BaseEntity<Guid>, IEntity
     {
-        public string Name { get; set; }
+        public string Key { get; set; }
+        public string? Name { get; set; }
         public string? Description { get; set; }
 
         public IEnumerable<UserPermission>? UserPermissions { get; set; }

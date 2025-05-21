@@ -62,13 +62,13 @@ namespace MeArch.Module.Security.Service
             if (roles != null)
                 foreach (var role in roles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role.Name));
+                    claims.Add(new Claim(ClaimTypes.Role, role.Key));
                 }
 
             if (permissions != null)
                 foreach (var permission in permissions)
                 {
-                    claims.Add(new Claim("Permission", permission.Name));
+                    claims.Add(new Claim("Permission", permission.Key));
                 }
 
             return claims;

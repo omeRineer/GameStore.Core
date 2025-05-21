@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete.ProcessGroups;
-using Models.SliderContent.WebService;
+using Models.SliderContent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

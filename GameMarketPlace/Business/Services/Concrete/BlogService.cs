@@ -12,8 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Enum.Type;
-using Models.Blog.WebService;
-using Models.Category.WebService;
+using Models.Blog;
 
 namespace Business.Services.Concrete
 {

@@ -6,9 +6,12 @@ using Configuration;
 using Core.Extensions;
 using Core.ServiceModules;
 using Core.Utilities.ServiceTools;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.ServiceModules;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.FileProviders;
+using System;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -38,6 +41,14 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 StaticServiceProvider.CreateInstance(app.Services.GetService<IServiceScopeFactory>());
+
+#if !DEBUG
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CoreContext>();
+    db.Database.Migrate();
+}
+#endif
 
 if (app.Environment.IsDevelopment())
 {

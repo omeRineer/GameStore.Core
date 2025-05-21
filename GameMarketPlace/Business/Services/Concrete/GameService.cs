@@ -16,9 +16,7 @@ using System.Threading.Tasks;
 using System.IO;
 using MassTransit;
 using Entities.Enum.Type;
-using Models.Game.WebService;
-using Models.Category.WebService;
-using Models.Blog.WebService;
+using Models.Game;
 
 namespace Business.Services.Concrete
 {

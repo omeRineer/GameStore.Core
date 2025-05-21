@@ -1,6 +1,8 @@
 ﻿using Business.Services;
 using Business.Services.Abstract;
+using Business.Services.Abstract.Lookup;
 using Business.Services.Concrete;
+using Business.Services.Concrete.Lookup;
 using Configuration;
 using Core.ServiceModules;
 using DataAccess;
@@ -31,6 +33,8 @@ namespace Business.ServiceModules
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IPermissionService, PermissionService>();
+
+            services.AddScoped<ILookupService, LookupService>();
         }
     }
 }

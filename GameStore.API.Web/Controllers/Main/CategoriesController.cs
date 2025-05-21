@@ -2,8 +2,8 @@
 using Core.Utilities.ResultTool;
 using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
-using Models.Category.WebService;
 using MeArch.Module.Security.Filters;
+using Models.Category;
 
 namespace GameStore.API.Web.Controllers.Main
 {

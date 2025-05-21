@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
-using Models.Game.WebService;
 using MeArch.Module.Security.Filters;
+using Models.Game;
 
 namespace GameStore.API.Web.Controllers.Main
 {

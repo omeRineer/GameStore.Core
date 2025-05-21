@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Main;
-using Models.SliderContent.WebService;
+using Models.SliderContent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

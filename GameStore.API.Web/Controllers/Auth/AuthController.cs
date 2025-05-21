@@ -2,7 +2,7 @@
 using GameStore.API.Web.Controllers.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.Auth.Login;
+using Models.Identity.Login;
 
 namespace GameStore.API.Web.Controllers.Auth
 {

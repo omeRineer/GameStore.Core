@@ -3,8 +3,8 @@ using Entities.Main;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
-using Models.SliderContent.WebService;
 using MeArch.Module.Security.Filters;
+using Models.SliderContent;
 
 namespace GameStore.API.Web.Controllers.Main
 {

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess;
 using DataAccess.Concrete.EntityFramework.General;
+using DataAccess.Concrete.EntityFramework.General.Identity;
+using DataAccess.Concrete.EntityFramework.General.Lookup;
 
 namespace DataAccess.ServiceModules
 {
@@ -16,7 +18,6 @@ namespace DataAccess.ServiceModules
         {
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<ISystemRequirementRepository, SystemRequirementRepository>();
             services.AddScoped<IMediaRepository, MediaRepository>();
             services.AddScoped<ISliderContentRepository, SliderContentRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
@@ -30,6 +31,10 @@ namespace DataAccess.ServiceModules
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+
+            services.AddScoped<IProcessGroupRepository, ProcessGroupRepository>();
+            services.AddScoped<IStatusLookupRepository, StatusLookupRepository>();
+            services.AddScoped<ITypeLookupRepository, TypeLookupRepository>();
         }
     }
 }

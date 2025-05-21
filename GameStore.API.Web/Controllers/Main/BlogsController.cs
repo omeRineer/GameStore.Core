@@ -5,8 +5,8 @@ using GameStore.API.Web.Controllers.Base;
 using MA = Core.Entities.DTO.File;
 using Core.Utilities.Filters;
 using Core.Entities.Concrete.ProcessGroups.Enums.Types;
-using Models.Blog.WebService;
 using MeArch.Module.Security.Filters;
+using Models.Blog;
 
 namespace GameStore.API.Web.Controllers.Main
 {

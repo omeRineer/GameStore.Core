@@ -3,8 +3,8 @@ using Core.Utilities.ResultTool;
 using Entities.Main;
 using System.Collections.Generic;
 using System;
-using Models.Game.WebService;
 using System.Threading.Tasks;
+using Models.Game;
 
 
 namespace Business.Services.Abstract

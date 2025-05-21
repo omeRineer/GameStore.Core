@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Main;
-using Models.Game.WebService;
+using Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;

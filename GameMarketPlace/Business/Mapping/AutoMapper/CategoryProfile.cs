@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Main;
-using Models.Category.WebService;
-using Models.Game.WebService;
+using Models.Category;
+using Models.Game;
 
 namespace Business.Mapping.AutoMapper
 {

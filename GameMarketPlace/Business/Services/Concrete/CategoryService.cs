@@ -8,7 +8,7 @@ using Entities.Enum.Type;
 using Entities.Main;
 using MeArch.Module.Security.Model.Dto;
 using Microsoft.EntityFrameworkCore;
-using Models.Category.WebService;
+using Models.Category;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

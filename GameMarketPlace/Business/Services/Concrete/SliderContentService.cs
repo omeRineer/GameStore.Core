@@ -14,10 +14,8 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
 using Entities.Enum.Type;
-using Models.SliderContent.WebService;
-using Models.Category.WebService;
 using Business.Helpers;
-using Models.Blog.WebService;
+using Models.SliderContent;
 
 namespace Business.Services.Concrete
 {
