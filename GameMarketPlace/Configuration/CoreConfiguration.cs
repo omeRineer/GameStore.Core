@@ -20,18 +20,12 @@ namespace Configuration
                                 .Build();
         }
 
-        public static string ConnectionString { get => Configuration.GetConnectionString("DbConnectionString"); }
+        public static DataBaseOptions DataBaseOptions { get => Configuration.GetSection("DataBaseOptions").Get<DataBaseOptions>(); }
         public static EmailOptions EmailOptions { get => Configuration.GetSection("EmailOptions").Get<EmailOptions>(); }
         public static TokenOptions TokenOptions { get => Configuration.GetSection("TokenOptions").Get<TokenOptions>(); }
         public static FileOptions FileOptions { get => Configuration.GetSection("FileOptions").Get<FileOptions>(); }
         public static APIOptions APIOptions { get => Configuration.GetSection("APIOptions").Get<APIOptions>(); }
-        public static MassTransitOptions MassTransitOptions { get => Configuration.GetSection("MassTransitOptions").Get<MassTransitOptions>(); }
+        public static RabbitMqOptions RabbitMqOptions { get => Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>(); }
 
-        #region Silinecek
-        public static string ODataApiUrl { get => "https://localhost:7227/odata"; }
-        public static string WebApiUrl { get => "https://localhost:7184/webapi"; }
-        public static string StorageAPIPath { get => "https://localhost:7095"; }
-
-        #endregion
     }
 }

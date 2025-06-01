@@ -1,8 +1,11 @@
 ﻿using Business.Helpers;
-using Core.Entities.Concrete.ProcessGroups.Enums.Types;
+using Business.Services.Internal;
 using Core.Utilities.Helpers;
+using Core.Utilities.ServiceTools;
+using Entities.Enum.Type;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Models.Message;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,50 +15,57 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Filters
 {
-    public class Benchmark : ActionFilterAttribute
+    public class Benchmark : ActionFilterAttribute, IAsyncActionFilter
     {
         readonly int MaxMilliseconds;
         readonly Stopwatch Stopwatch;
-        readonly LogTypeEnum[] logTo;
+        readonly LogType[] logTo;
+        readonly NotificationService NotificationService;
 
-        public Benchmark(int maxTimeout = 5000, params LogTypeEnum[] logTypes)
+        public Benchmark(int maxTimeout = 5000, params LogType[] logTypes)
         {
             MaxMilliseconds = maxTimeout;
             Stopwatch = Stopwatch.StartNew();
             logTo = logTypes;
+            NotificationService = StaticServiceProvider.GetService<NotificationService>();
         }
 
-        public override void OnActionExecuted(ActionExecutedContext context)
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            Stopwatch.Reset();
+            Stopwatch.Start();
+
+            await next();
+
             Stopwatch.Stop();
 
             double milliSeconds = Math.Round(Stopwatch.Elapsed.TotalMilliseconds, 2);
 
             if (milliSeconds > MaxMilliseconds)
-                AlertTo(context, milliSeconds);
+                await AlertToAsync(context, milliSeconds);
         }
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            Stopwatch.Reset();
-            Stopwatch.Start();
-        }
-        private void AlertTo(ActionExecutedContext context, double milliSeconds)
+
+        private async Task AlertToAsync(ActionExecutingContext context, double milliSeconds)
         {
             foreach (var logType in logTo)
             {
                 switch (logType)
                 {
-                    case LogTypeEnum.Console:
+                    case LogType.Console:
                         break;
 
-                    case LogTypeEnum.Debug:
+                    case LogType.Debug:
                         break;
 
-                    case LogTypeEnum.Notification:
-                        NotificationHelper.Publish("Benchmark", NotificationTypeEnum.Warning, new
+                    case LogType.Notification:
+                        await NotificationService.PushAsync(new PushNotificationMessage
                         {
-                            Action = context.ActionDescriptor.DisplayName,
-                            Milliseconds = milliSeconds
+                            Type = "system",
+                            Level = "warning",
+                            Sender = "System",
+                            Title = $"Benchmark Uyarısı",
+                            Content = $"{context.ActionDescriptor.DisplayName} çalışma süresi {milliSeconds}ms",
+                            ContentType  = "text"
                         });
                         break;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete.ProcessGroups
 {
-    public class ProcessGroup : BaseEntity<int>, IEntity
+    public class ProcessGroup : BaseEntity<int>
     {
         public string Code { get; set; }
         public string Description { get; set; }

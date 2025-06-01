@@ -1,5 +1,6 @@
-﻿using MeArch.Module.Security.Model.Options;
-using MeArch.Module.Security.Model.UserIdentity;
+﻿using MeArch.Module.Security.Entities.Master;
+using MeArch.Module.Security.Entities.Menu;
+using MeArch.Module.Security.Model.Options;
 using MeArch.Module.Security.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,9 @@ namespace MeArch.Module.Security.Extensions
         public static ModelBuilder UserIdentity(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                        .ToTable("Users");
+                        .ToTable("Users")
+                        .HasIndex(i => i.Key)
+                        .IsUnique();
 
             modelBuilder.Entity<Role>()
                         .ToTable("Roles");
@@ -43,6 +46,20 @@ namespace MeArch.Module.Security.Extensions
 
             modelBuilder.Entity<RolePermission>()
                         .ToTable("RolePermissions");
+
+            return modelBuilder;
+        }
+
+        public static ModelBuilder MenuItems(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Menu>()
+                        .ToTable("Menus");
+
+            modelBuilder.Entity<MenuRole>()
+                        .ToTable("MenuRoles");
+
+            modelBuilder.Entity<MenuPermission>()
+                        .ToTable("MenuPermission");
 
             return modelBuilder;
         }

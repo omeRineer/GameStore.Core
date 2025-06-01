@@ -27,7 +27,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.Register<DbContext>(x =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<CoreContext>();
-                optionsBuilder.UseSqlServer(CoreConfiguration.ConnectionString);
+                optionsBuilder.UseSqlServer(CoreConfiguration.DataBaseOptions.ConnectionString);
                 return new CoreContext(optionsBuilder.Options);
             }).InstancePerLifetimeScope();
 

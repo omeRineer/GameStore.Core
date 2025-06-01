@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using MassTransit;
 using Entities.Enum.Type;
 using Business.Helpers;
 using Models.SliderContent;
@@ -21,15 +20,13 @@ namespace Business.Services.Concrete
 {
     public class SliderContentService : ISliderContentService
     {
-        readonly IMediaService _mediaService;
-        readonly ISliderContentRepository _sliderContentRepository;
+        readonly IEfSliderContentRepository _sliderContentRepository;
         readonly IMapper _mapper;
 
-        public SliderContentService(ISliderContentRepository sliderContentRepository, IMapper mapper, IMediaService mediaService)
+        public SliderContentService(IEfSliderContentRepository sliderContentRepository, IMapper mapper)
         {
             _sliderContentRepository = sliderContentRepository;
             _mapper = mapper;
-            _mediaService = mediaService;
         }
 
         public async Task<IResult> CreateAsync(CreateSliderContentRequest request)
@@ -38,13 +35,13 @@ namespace Business.Services.Concrete
             entity.GenerateId();
 
             await _sliderContentRepository.AddAsync(entity);
-            await _mediaService.AddAsync(new Media
-            {
-                EntityId = entity.Id,
-                TypeId = (int)BusinessHelper.GetMediaTypeBySliderType(entity),
-                Node = request.Image.Node,
-                Name = request.Image.Name
-            });
+            //await _mediaService.AddAsync(new Media
+            //{
+            //    EntityId = entity.Id,
+            //    TypeId = (int)BusinessHelper.GetMediaTypeBySliderType(entity),
+            //    Node = request.Image.Node,
+            //    Name = request.Image.Name
+            //});
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();
@@ -53,9 +50,6 @@ namespace Business.Services.Concrete
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == id);
-            var medias = await _mediaService.GetListByEntityAsync(id);
-
-            await _mediaService.RemoveAsync(medias.Data);
             await _sliderContentRepository.DeleteAsync(entity);
             await _sliderContentRepository.SaveAsync();
 
@@ -67,9 +61,9 @@ namespace Business.Services.Concrete
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == id, includes: i => i.Include(x => x.SliderType));
             var mappedEntity = _mapper.Map<SingleSliderContentResponse>(entity);
 
-            var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, BusinessHelper.GetMediaTypeBySliderType(entity));
-            if (coverImage.Data != null)
-                mappedEntity.Image = new MA.File { Node = coverImage.Data.Node, Name = coverImage.Data.Name };
+            //var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, BusinessHelper.GetMediaTypeBySliderType(entity));
+            //if (coverImage.Data != null)
+            //    mappedEntity.Image = new MA.File { Node = coverImage.Data.Node, Name = coverImage.Data.Name };
 
             return new SuccessDataResult<SingleSliderContentResponse>(mappedEntity);
         }
@@ -88,26 +82,26 @@ namespace Business.Services.Concrete
             var mediaType = BusinessHelper.GetMediaTypeBySliderType(mappedEntity);
 
             await _sliderContentRepository.UpdateAsync(entity);
-            if (request.Image != null)
-            {
-                var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, mediaType);
+            //if (request.Image != null)
+            //{
+            //    var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, mediaType);
 
-                // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
-                if (coverImage.Data != null)
-                {
-                    coverImage.Data.Name = request.Image.Name;
-                    coverImage.Data.Node = request.Image.Node;
-                    await _mediaService.EditAsync(coverImage.Data);
-                }
-                else
-                    await _mediaService.AddAsync(new Media
-                    {
-                        TypeId = (int)mediaType,
-                        Node = request.Image.Node,
-                        Name = request.Image.Name,
-                        EntityId = entity.Id
-                    });
-            }
+            //    // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
+            //    if (coverImage.Data != null)
+            //    {
+            //        coverImage.Data.Name = request.Image.Name;
+            //        coverImage.Data.Node = request.Image.Node;
+            //        await _mediaService.EditAsync(coverImage.Data);
+            //    }
+            //    else
+            //        await _mediaService.AddAsync(new Media
+            //        {
+            //            TypeId = (int)mediaType,
+            //            Node = request.Image.Node,
+            //            Name = request.Image.Name,
+            //            EntityId = entity.Id
+            //        });
+            //}
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();

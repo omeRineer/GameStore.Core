@@ -5,7 +5,7 @@ using GameStore.API.OData.Controllers.Base;
 
 namespace GameStore.API.OData.Controllers.Main
 {
-    public class GamesController : BaseODataController<Game>
+    public class GamesController : BaseODataController<Game, Guid>
     {
         public GamesController(DbContext context) : base(context)
         {

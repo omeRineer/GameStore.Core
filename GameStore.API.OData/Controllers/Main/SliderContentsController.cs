@@ -7,7 +7,7 @@ using GameStore.API.OData.Controllers.Base;
 
 namespace GameStore.API.OData.Controllers.Main
 {
-    public class SliderContentsController : BaseODataController<SliderContent>
+    public class SliderContentsController : BaseODataController<SliderContent, Guid>
     {
         public SliderContentsController(DbContext context) : base(context)
         {

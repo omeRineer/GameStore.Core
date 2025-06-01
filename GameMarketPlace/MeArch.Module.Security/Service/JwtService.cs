@@ -1,7 +1,7 @@
-﻿using MeArch.Module.Security.Helpers;
+﻿using MeArch.Module.Security.Entities.Master;
+using MeArch.Module.Security.Helpers;
 using MeArch.Module.Security.Model;
 using MeArch.Module.Security.Model.Options;
-using MeArch.Module.Security.Model.UserIdentity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -56,7 +56,8 @@ namespace MeArch.Module.Security.Service
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.MobilePhone, user.Phone)
+                new Claim(ClaimTypes.MobilePhone, user.Phone),
+                new Claim("Key", user.Key),
             };
 
             if (roles != null)

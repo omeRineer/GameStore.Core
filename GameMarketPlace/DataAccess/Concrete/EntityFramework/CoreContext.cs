@@ -1,8 +1,8 @@
 ﻿using Core.Entities.Abstract;
-using Core.Entities.Concrete.GeneralSettings;
 using Core.Extensions;
 using DataAccess.Concrete.EntityFramework.EntityConfigurations;
 using Entities.Enum;
+using Entities.Enum.Type;
 using Entities.Main;
 using MeArch.Module.Security.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -23,7 +23,13 @@ namespace DataAccess.Concrete.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ProcessGroups();
+            modelBuilder.ProcessGroups(processGroup: typeof(ProcessGroupEnum),
+                                       types: new Type[]
+                                       {
+                                           typeof(LogType),
+                                           typeof(MediaType),
+                                           typeof(SliderType)
+                                       });
             modelBuilder.UserIdentity();
             modelBuilder.MenuItems();
 

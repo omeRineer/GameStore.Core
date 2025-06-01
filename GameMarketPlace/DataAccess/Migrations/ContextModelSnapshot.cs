@@ -22,43 +22,6 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Entities.Concrete.Menu.Menu", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ParentMenuId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentMenuId");
-
-                    b.ToTable("Menus", (string)null);
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.ProcessGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -79,6 +42,40 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProcessGroups", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100,
+                            Code = "MEDIATYPE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "MediaType",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 200,
+                            Code = "SLIDERTYPE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "SliderType",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 300,
+                            Code = "NOTIFICATIONTYPE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "NotificationType",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 400,
+                            Code = "LOGTYPE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "LogType",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.StatusLookup", b =>
@@ -133,34 +130,116 @@ namespace DataAccess.Migrations
                     b.HasIndex("ProcessGroupId");
 
                     b.ToTable("TypeLookups", (string)null);
-                });
 
-            modelBuilder.Entity("Entities.Main.BackgroundJob", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Cron")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("JobName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BackgroundJobs", (string)null);
+                    b.HasData(
+                        new
+                        {
+                            Id = 401,
+                            Code = "DEBUG",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Debug",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 400
+                        },
+                        new
+                        {
+                            Id = 402,
+                            Code = "CONSOLE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Console",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 400
+                        },
+                        new
+                        {
+                            Id = 403,
+                            Code = "NOTIFICATION",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Notification",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 400
+                        },
+                        new
+                        {
+                            Id = 404,
+                            Code = "DATABASE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "DataBase",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 400
+                        },
+                        new
+                        {
+                            Id = 405,
+                            Code = "FILE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "File",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 400
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Code = "GAMEIMAGE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "GameImage",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 100
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Code = "SLIDERITEMIMAGE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "SliderItemImage",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 100
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Code = "SLIDERSIDEITEMIMAGE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "SliderSideItemImage",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 100
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Code = "BLOGCOVERIMAGE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "BlogCoverImage",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 100
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Code = "GAMECOVERIMAGE",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "GameCoverImage",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 100
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Code = "SLIDERITEM",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "SliderItem",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 200
+                        },
+                        new
+                        {
+                            Id = 202,
+                            Code = "SLIDERSIDEITEM",
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "SliderSideItem",
+                            EditDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProcessGroupId = 200
+                        });
                 });
 
             modelBuilder.Entity("Entities.Main.Blog", b =>
@@ -252,37 +331,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Games", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Main.Media", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EntityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Node")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TypeId");
-
-                    b.ToTable("Medias", (string)null);
-                });
-
             modelBuilder.Entity("Entities.Main.SliderContent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -319,49 +367,7 @@ namespace DataAccess.Migrations
                     b.ToTable("SliderContents", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Main.SystemRequirement", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DisplayCard")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("OS")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Processor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ram")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Storage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SystemRequirementTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("SystemRequirementTypeId");
-
-                    b.ToTable("SystemRequirements", (string)null);
-                });
-
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.Permission", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.Permission", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -388,7 +394,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Permissions", (string)null);
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.Role", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -415,7 +421,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.RolePermission", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.RolePermission", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -442,7 +448,7 @@ namespace DataAccess.Migrations
                     b.ToTable("RolePermissions", (string)null);
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.User", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -465,6 +471,10 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -483,10 +493,13 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Key")
+                        .IsUnique();
+
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.UserPermission", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.UserPermission", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -513,7 +526,7 @@ namespace DataAccess.Migrations
                     b.ToTable("UserPermissions", (string)null);
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.UserRole", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.UserRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,13 +553,96 @@ namespace DataAccess.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.Menu.Menu", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.Menu", b =>
                 {
-                    b.HasOne("Core.Entities.Concrete.Menu.Menu", "ParentMenu")
-                        .WithMany()
-                        .HasForeignKey("ParentMenuId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("ParentMenu");
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ParentMenuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentMenuId");
+
+                    b.ToTable("Menus", (string)null);
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuPermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("MenuPermission", (string)null);
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("MenuRoles", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.StatusLookup", b =>
@@ -582,17 +678,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Entities.Main.Media", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.ProcessGroups.TypeLookup", "Type")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Type");
-                });
-
             modelBuilder.Entity("Entities.Main.SliderContent", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.ProcessGroups.TypeLookup", "SliderType")
@@ -604,34 +689,15 @@ namespace DataAccess.Migrations
                     b.Navigation("SliderType");
                 });
 
-            modelBuilder.Entity("Entities.Main.SystemRequirement", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.RolePermission", b =>
                 {
-                    b.HasOne("Entities.Main.Game", "Game")
-                        .WithMany("SystemRequirements")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Concrete.ProcessGroups.TypeLookup", "SystemRequirementType")
-                        .WithMany()
-                        .HasForeignKey("SystemRequirementTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("SystemRequirementType");
-                });
-
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.RolePermission", b =>
-                {
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.Permission", "Permission")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.Role", "Role")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -642,15 +708,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.UserPermission", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.UserPermission", b =>
                 {
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.Permission", "Permission")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Permission", "Permission")
                         .WithMany("UserPermissions")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.User", "User")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.User", "User")
                         .WithMany("UserPermissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -661,15 +727,15 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.UserRole", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.UserRole", b =>
                 {
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.Role", "Role")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MeArch.Module.Security.Model.UserIdentity.User", "User")
+                    b.HasOne("MeArch.Module.Security.Entities.Master.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -678,6 +744,53 @@ namespace DataAccess.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.Menu", b =>
+                {
+                    b.HasOne("MeArch.Module.Security.Entities.Menu.Menu", "ParentMenu")
+                        .WithMany()
+                        .HasForeignKey("ParentMenuId");
+
+                    b.Navigation("ParentMenu");
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuPermission", b =>
+                {
+                    b.HasOne("MeArch.Module.Security.Entities.Menu.Menu", "Menu")
+                        .WithMany("Permissions")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("Permission");
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuRole", b =>
+                {
+                    b.HasOne("MeArch.Module.Security.Entities.Menu.Menu", "Menu")
+                        .WithMany("Roles")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.ProcessGroup", b =>
@@ -692,28 +805,30 @@ namespace DataAccess.Migrations
                     b.Navigation("Games");
                 });
 
-            modelBuilder.Entity("Entities.Main.Game", b =>
-                {
-                    b.Navigation("SystemRequirements");
-                });
-
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.Permission", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.Permission", b =>
                 {
                     b.Navigation("UserPermissions");
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.Role", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.Role", b =>
                 {
                     b.Navigation("RolePermissions");
 
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("MeArch.Module.Security.Model.UserIdentity.User", b =>
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Master.User", b =>
                 {
                     b.Navigation("UserPermissions");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.Menu", b =>
+                {
+                    b.Navigation("Permissions");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

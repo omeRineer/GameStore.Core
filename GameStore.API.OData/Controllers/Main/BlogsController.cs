@@ -7,7 +7,7 @@ using GameStore.API.OData.Controllers.Base;
 
 namespace GameStore.API.OData.Controllers.Main
 {
-    public class BlogsController : BaseODataController<Blog>
+    public class BlogsController : BaseODataController<Blog, Guid>
     {
         public BlogsController(DbContext context) : base(context)
         {

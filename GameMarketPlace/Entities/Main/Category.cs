@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Main
 {
-    public class Category : BaseEntity<Guid>, IEntity
+    public class Category : BaseEntity<Guid>
     {
         public string Name { get; set; }
 

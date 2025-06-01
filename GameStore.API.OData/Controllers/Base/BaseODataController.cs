@@ -14,8 +14,8 @@ using GameStore.API.OData.Filters;
 
 namespace GameStore.API.OData.Controllers.Base
 {
-    public abstract class BaseODataController<TEntity> : ODataController
-        where TEntity : class, IEntity, new()
+    public abstract class BaseODataController<TEntity, TKey> : ODataController
+        where TEntity : class, IEntity<TKey>, new()
     {
         protected readonly DbContext Context;
         protected readonly DbSet<TEntity> Table;

@@ -7,7 +7,7 @@ using GameStore.API.OData.Controllers.Base;
 
 namespace GameStore.API.OData.Controllers.Core
 {
-    public class TypeLookupsController : BaseODataController<TypeLookup>
+    public class TypeLookupsController : BaseODataController<TypeLookup, int>
     {
         public TypeLookupsController(DbContext context) : base(context)
         {

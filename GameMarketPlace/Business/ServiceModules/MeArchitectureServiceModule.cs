@@ -19,6 +19,7 @@ using MeArch.Module.Security.Model.Dto;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Business.ServiceModules
 {
@@ -28,8 +29,10 @@ namespace Business.ServiceModules
         {
             services.AddDbContext<CoreContext>(options =>
             {
-                options.UseSqlServer(CoreConfiguration.ConnectionString);
+                options.UseSqlServer(CoreConfiguration.DataBaseOptions.ConnectionString);
             });
+
+            
 
             services.AddCors(options =>
                             options.AddDefaultPolicy(builder =>
@@ -71,6 +74,7 @@ namespace Business.ServiceModules
                     return new CurrentUser
                     {
                         Id = Guid.Parse(user.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)?.Value),
+                        Key = user.Claims.FirstOrDefault(f => f.Type == "Key")?.Value,
                         Name = user.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Name)?.Value,
                         Phone = user.Claims.FirstOrDefault(f => f.Type == ClaimTypes.MobilePhone)?.Value,
                         Email = user.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Email)?.Value,

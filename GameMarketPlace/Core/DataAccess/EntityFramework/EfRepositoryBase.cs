@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess.EntityFramework
 {
-    public class EfRepositoryBase<TEntity> : IEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
+    public class EfRepositoryBase<TEntity, TKey> : IEfEntityRepository<TEntity, TKey>, IEfEntityRepositoryAsync<TEntity, TKey>
+        where TEntity : class, IEntity<TKey>, new()
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> Table;
@@ -23,6 +23,33 @@ namespace Core.DataAccess.EntityFramework
         }
 
         #region Sync
+
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
+            => GetList(filter, null, orderBy, paginationParameter, false);
+
+        public TEntity GetFirst(Expression<Func<TEntity, bool>> filter)
+            => GetFirst(filter, null, false);
+
+        public TEntity GetSingle(Expression<Func<TEntity, bool>> filter)
+            => GetSingle(filter, null, false);
+
+        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter)
+            => GetFirstOrDefault(filter, null, false);
+
+        public TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> filter)
+            => GetSingleOrDefault(filter, null, false);
+
+        public void Delete(TKey id)
+        {
+            var entity = Table.Find(id);
+            Delete(entity);
+        }
+
+        public void DeleteRange(IEnumerable<TKey> ids)
+        {
+            var entities = Table.Where(f => ids.Contains(f.Id));
+            DeleteRange(entities);
+        }
         public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter,
                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                            bool isTracking = true)
@@ -133,8 +160,8 @@ namespace Core.DataAccess.EntityFramework
             _context.SaveChanges();
         }
 
-        public Dictionary<TKey, TValue> GetDictionaries<TKey, TValue>(Func<TEntity, TKey> key,
-                                                                      Func<TEntity, TValue> value,
+        public Dictionary<TK, TV> GetDictionaries<TK, TV>(Func<TEntity, TK> key,
+                                                                      Func<TEntity, TV> value,
                                                                       Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = Table.AsQueryable();
@@ -164,7 +191,7 @@ namespace Core.DataAccess.EntityFramework
             return await query.ToListAsync();
         }
 
-        public async Task<Dictionary<TKey, TValue>> GetDictionariesAsync<TKey, TValue>(Func<TEntity, TKey> key, Func<TEntity, TValue> value, Expression<Func<TEntity, bool>> filter = null)
+        public async Task<Dictionary<TK, TV>> GetDictionariesAsync<TK, TV>(Func<TEntity, TK> key, Func<TEntity, TV> value, Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = Table.AsQueryable();
 
@@ -272,6 +299,37 @@ namespace Core.DataAccess.EntityFramework
 
             await Task.CompletedTask;
         }
+
+        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
+            => await GetListAsync(filter, null, orderBy, paginationParameter, false);
+
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+            => await GetFirstOrDefaultAsync(filter, null, false);
+
+        public async Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+            => await GetSingleOrDefaultAsync(filter, null, false);
+
+        public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> filter)
+            => await GetFirstAsync(filter, null, false);
+
+        public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter)
+            => await GetSingleAsync(filter, null, false);
+
+        public async Task DeleteAsync(TKey id)
+        {
+            var entity = await Table.FindAsync(id);
+            Table.Remove(entity);
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<TKey> ids)
+        {
+            var entities = Table.Where(f => ids.Contains(f.Id));
+            Table.RemoveRange(entities);
+
+            await Task.CompletedTask;
+        }
+
+
 
         #endregion
     }

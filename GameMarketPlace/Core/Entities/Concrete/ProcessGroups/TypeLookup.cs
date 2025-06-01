@@ -2,7 +2,7 @@
 
 namespace Core.Entities.Concrete.ProcessGroups
 {
-    public class TypeLookup : BaseEntity<int>, IEntity
+    public class TypeLookup : BaseEntity<int>
     {
         public int ProcessGroupId { get; set; }
         public string Code { get; set; }

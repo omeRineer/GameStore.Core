@@ -12,11 +12,11 @@ namespace Business.Services.Concrete.Lookup
 {
     public class LookupService : ILookupService
     {
-        readonly IProcessGroupRepository _processGroupRepository;
-        readonly IStatusLookupRepository _statusLookupRepository;
-        readonly ITypeLookupRepository _typeLookupRepository;
+        readonly IEfProcessGroupRepository _processGroupRepository;
+        readonly IEfStatusLookupRepository _statusLookupRepository;
+        readonly IEfTypeLookupRepository _typeLookupRepository;
 
-        public LookupService(IProcessGroupRepository processGroupRepository, IStatusLookupRepository statusLookupRepository, ITypeLookupRepository typeLookupRepository)
+        public LookupService(IEfProcessGroupRepository processGroupRepository, IEfStatusLookupRepository statusLookupRepository, IEfTypeLookupRepository typeLookupRepository)
         {
             _processGroupRepository = processGroupRepository;
             _statusLookupRepository = statusLookupRepository;

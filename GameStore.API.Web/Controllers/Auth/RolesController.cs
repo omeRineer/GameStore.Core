@@ -1,4 +1,4 @@
-﻿using Business.Services.Abstract;
+﻿using Business.Services.Abstract.Identity;
 using Business.Services.Concrete;
 using GameStore.API.Web.Controllers.Base;
 using MeArch.Module.Security.Filters;
@@ -80,7 +80,7 @@ namespace GameStore.API.Web.Controllers.Auth
             return Result(result);
         }
 
-        [HttpGet("GetPermissions")]
+        [HttpGet("GetPermissions/{id}")]
         [Authorize("SuperAdmin,API.Web.Roles.GetPermissions")]
         public async Task<IActionResult> GetPermissionsAsync(Guid id)
         {

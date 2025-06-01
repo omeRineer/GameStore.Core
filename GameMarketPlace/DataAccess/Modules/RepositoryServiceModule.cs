@@ -16,25 +16,25 @@ namespace DataAccess.ServiceModules
     {
         public void Load(IServiceCollection services)
         {
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<IMediaRepository, MediaRepository>();
-            services.AddScoped<ISliderContentRepository, SliderContentRepository>();
-            services.AddScoped<IMenuRepository, MenuRepository>();
-            services.AddScoped<IBlogRepository, BlogRepository>();
-            services.AddScoped<IBackgroundJobRepository, BackgroundJobRepository>();
-            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IEfCategoryRepository, EfCategoryRepository>();
+            services.AddScoped<IEfCategoryRepository, EfCategoryRepository>();
+            services.AddScoped<IEfGameRepository, EfGameRepository>();
+            services.AddScoped<IEfSliderContentRepository, EfSliderContentRepository>();
+            services.AddScoped<IEfBlogRepository, EfBlogRepository>();
 
-            services.AddScoped<IPermissionRepository, PermissionRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
-            services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+            services.AddScoped<IEfPermissionRepository, EfPermissionRepository>();
+            services.AddScoped<IEfMenuRepository, EfMenuRepository>();
+            services.AddScoped<IEfMenuRoleRepository, EfMenuRoleRepository>();
+            services.AddScoped<IEfMenuPermissionRepository, EfMenuPermissionRepository>();
+            services.AddScoped<IEfUserRoleRepository, EfUserRoleRepository>();
+            services.AddScoped<IEfUserRepository, EfUserRepository>();
+            services.AddScoped<IEfRoleRepository, EfRoleRepository>();
+            services.AddScoped<IEfRolePermissionRepository, EfRolePermissionRepository>();
+            services.AddScoped<IEfUserPermissionRepository, EfUserPermissionRepository>();
 
-            services.AddScoped<IProcessGroupRepository, ProcessGroupRepository>();
-            services.AddScoped<IStatusLookupRepository, StatusLookupRepository>();
-            services.AddScoped<ITypeLookupRepository, TypeLookupRepository>();
+            services.AddScoped<IEfProcessGroupRepository, EfProcessGroupRepository>();
+            services.AddScoped<IEfStatusLookupRepository, EfStatusLookupRepository>();
+            services.AddScoped<IEfTypeLookupRepository, EfTypeLookupRepository>();
         }
     }
 }

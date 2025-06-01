@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Abstract
 {
-    public abstract class BaseEntity<TKey> : IEntity
+    public abstract class BaseEntity<TKey> : IEntity<TKey>
     {
         public BaseEntity(bool isGeneratedId = false)
         {

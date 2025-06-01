@@ -1,6 +1,5 @@
 ﻿using Core.Entities.Abstract;
 using Core.Entities.DTO.Pagination;
-using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,46 +9,32 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IEntityRepositoryAsync<TEntity>
-        where TEntity : class, IEntity, new()
+    public interface IEntityRepositoryAsync<TEntity, TKey>
+        where TEntity : class, IEntity<TKey>, new()
     {
         Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null,
-                                   Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                   PaginationParameter? paginationParameter = null,
-                                   bool isTracking = true);
+                                   PaginationParameter? paginationParameter = null);
 
-        Task<Dictionary<TKey, TValue>> GetDictionariesAsync<TKey, TValue>(Func<TEntity, TKey> key,
-                                                                    Func<TEntity, TValue> value,
+        Task<Dictionary<TK, TV>> GetDictionariesAsync<TK, TV>(Func<TEntity, TK> key,
+                                                                    Func<TEntity, TV> value,
                                                                     Expression<Func<TEntity, bool>> filter = null);
-        Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter,
-                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
-                         bool isTracking = true);
+        Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter);
 
-        Task<TEntity?> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter,
-                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
-                         bool isTracking = true);
+        Task<TEntity?> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter);
 
-        Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> filter,
-                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
-                         bool isTracking = true);
+        Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> filter);
 
-        Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter,
-                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
-                         bool isTracking = true);
+        Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter);
         Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> expression);
 
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
-        Task DeleteAsync(TEntity entity);
-        Task DeleteRangeAsync(IEnumerable<TEntity> entities);
+        Task DeleteAsync(TKey id);
+        Task DeleteRangeAsync(IEnumerable<TKey> ids);
 
         Task UpdateAsync(TEntity entity);
         Task UpdateRangeAsync(IEnumerable<TEntity> entities);
-
-        Task ExecuteSqlAsync(string query, params object[] parameters);
-
-        Task SaveAsync();
     }
 }

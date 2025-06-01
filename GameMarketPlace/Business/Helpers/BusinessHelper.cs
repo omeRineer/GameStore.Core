@@ -11,13 +11,13 @@ namespace Business.Helpers
 {
     public static class BusinessHelper
     {
-        public static MediaTypeEnum GetMediaTypeBySliderType(SliderContent sliderContent)
+        public static MediaType GetMediaTypeBySliderType(SliderContent sliderContent)
         {
-            MediaTypeEnum mediaType = sliderContent.SliderTypeId switch
+            MediaType mediaType = sliderContent.SliderTypeId switch
             {
-                (int)SliderTypeEnum.SliderItem => MediaTypeEnum.SliderItemImage,
-                (int)SliderTypeEnum.SliderSideItem => MediaTypeEnum.SliderSideItemImage,
-                _ => MediaTypeEnum.SliderItemImage
+                (int)SliderType.SliderItem => MediaType.SliderItemImage,
+                (int)SliderType.SliderSideItem => MediaType.SliderSideItemImage,
+                _ => MediaType.SliderItemImage
             };
 
             return mediaType;

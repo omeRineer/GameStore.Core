@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Main
 {
-    public class SliderContent : BaseEntity<Guid>, IEntity
+    public class SliderContent : BaseEntity<Guid>
     {
         public int SliderTypeId { get; set; }
         public string? Header { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Main
 {
-    public class Blog : BaseEntity<Guid>, IEntity
+    public class Blog : BaseEntity<Guid>
     {
         public string Header { get; set; }
         public string Content { get; set; }

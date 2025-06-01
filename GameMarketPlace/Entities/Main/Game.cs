@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Entities.Main
 {
-    public class Game : BaseEntity<Guid>, IEntity
+    public class Game : BaseEntity<Guid>
     {
         public Guid CategoryId { get; set; }
         public int? DeveloperId { get; set; }
@@ -17,6 +17,5 @@ namespace Entities.Main
 
 
         public Category Category { get; set; }
-        public ICollection<SystemRequirement> SystemRequirements { get; set; }
     }
 }

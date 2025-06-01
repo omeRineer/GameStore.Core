@@ -9,16 +9,15 @@ using Autofac;
 using Business.DependencyResolvers.Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Core.Entities.Concrete.ProcessGroups;
-using Core.Entities.Concrete.Menu;
 using System.Text.Json.Serialization;
 using Core.Utilities.ServiceTools;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Core.Entities.Concrete.GeneralSettings;
-using MeArch.Module.Security.Model.UserIdentity;
 using Autofac.Core;
 using Configuration;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using MeArch.Module.Security.Entities.Master;
+using MeArch.Module.Security.Entities.Menu;
 
 #region Edm Models
 static IEdmModel GetEdmModel()
@@ -27,15 +26,13 @@ static IEdmModel GetEdmModel()
 
     oDataBuilder.EntitySet<Category>("Categories");
     oDataBuilder.EntitySet<Game>("Games");
-    oDataBuilder.EntitySet<Media>("Medias");
     oDataBuilder.EntitySet<SliderContent>("SliderContents");
     oDataBuilder.EntitySet<TypeLookup>("TypeLookups");
-    oDataBuilder.EntitySet<GeneralSetting>("GeneralSettings");
-    oDataBuilder.EntitySet<Menu>("Menus");
     oDataBuilder.EntitySet<Blog>("Blogs");
     oDataBuilder.EntitySet<Permission>("Permissions");
     oDataBuilder.EntitySet<Role>("Roles");
     oDataBuilder.EntitySet<User>("Users");
+    oDataBuilder.EntitySet<Menu>("Menus");
 
     return oDataBuilder.GetEdmModel();
 }

@@ -9,6 +9,6 @@ namespace Models.Identity.Role
     public class SetRolePermissionsRequest
     {
         public Guid RoleId { get; set; }
-        public Guid[] Permissions { get; set; }
+        public Guid[]? Permissions { get; set; }
     }
 }

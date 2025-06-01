@@ -1,5 +1,5 @@
-﻿using MeArch.Module.Security.Model;
-using MeArch.Module.Security.Model.UserIdentity;
+﻿using MeArch.Module.Security.Entities.Master;
+using MeArch.Module.Security.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -12,7 +12,7 @@ using GameStore.API.OData.Filters;
 
 namespace GameStore.API.OData.Controllers.Main
 {
-    public class CategoriesController : BaseODataController<Category>
+    public class CategoriesController : BaseODataController<Category, Guid>
     {
         public CategoriesController(DbContext context) : base(context)
         {

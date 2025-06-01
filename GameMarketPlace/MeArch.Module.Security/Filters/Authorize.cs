@@ -14,9 +14,16 @@ namespace MeArch.Module.Security.Filters
     {
         readonly string[] Claims;
 
-        public Authorize(string claims)
+        public Authorize(string claims = null)
         {
-            Claims = claims.Split(',');
+            if (claims != null)
+            {
+                Claims = new string[]
+                {
+                    "SuperAdmin"
+                }
+                .Concat(claims.Split(',')).ToArray();
+            }
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
@@ -28,6 +35,9 @@ namespace MeArch.Module.Security.Filters
                 context.Result = new UnauthorizedResult();
                 return;
             }
+
+            if (Claims == null)
+                return;
 
             var userRoles = user.Claims.Where(f => f.Type == ClaimTypes.Role);
             var userPermissions = user.Claims.Where(f => f.Type == "Permission");

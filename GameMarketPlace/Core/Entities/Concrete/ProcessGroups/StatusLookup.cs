@@ -2,7 +2,7 @@
 
 namespace Core.Entities.Concrete.ProcessGroups
 {
-    public class StatusLookup : BaseEntity<int>, IEntity
+    public class StatusLookup : BaseEntity<int>
     {
         public int ProcessGroupId { get; set; }
         public string Code { get; set; }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Business.Services.Abstract;
-using Core.Business.BaseService;
 using Core.DataAccess;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General;
@@ -17,11 +16,11 @@ namespace Business.Services.Concrete
 {
     public class CategoryService : ICategoryService
     {
-        readonly ICategoryRepository _categoryRepository;
+        readonly IEfCategoryRepository _categoryRepository;
         readonly IMapper _mapper;
         readonly CurrentUser CurrentUser;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, CurrentUser currentUser)
+        public CategoryService(IEfCategoryRepository categoryRepository, IMapper mapper, CurrentUser currentUser)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Entities.Main;
-using MeArch.Module.Security.Model.UserIdentity;
+using MeArch.Module.Security.Entities.Master;
+using MeArch.Module.Security.Entities.Menu;
+using Models.Identity.Menu;
 using Models.Identity.Permission;
 using Models.Identity.Role;
 using Models.Identity.User;
@@ -32,6 +34,12 @@ namespace Business.Mapping.AutoMapper
             CreateMap<CreatePermissionRequest, Permission>();
             CreateMap<UpdatePermissionRequest, Permission>();
             CreateMap<Permission, SinglePermissionResponse>();
+            #endregion
+
+            #region Menu
+            CreateMap<CreateMenuRequest, Menu>();
+            CreateMap<UpdateMenuRequest, Menu>();
+            CreateMap<Menu, SingleMenuResponse>();
             #endregion
         }
     }

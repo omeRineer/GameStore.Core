@@ -1,5 +1,5 @@
 ﻿using Business.Services.Abstract.Lookup;
-using Core.Entities.Concrete.ProcessGroups;
+using Entities.Enum;
 using GameStore.API.Web.Controllers.Base;
 using MeArch.Module.Security.Filters;
 using Microsoft.AspNetCore.Http;

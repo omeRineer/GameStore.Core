@@ -1,8 +1,11 @@
 ﻿using Business.Services;
 using Business.Services.Abstract;
+using Business.Services.Abstract.Identity;
 using Business.Services.Abstract.Lookup;
 using Business.Services.Concrete;
+using Business.Services.Concrete.Identity;
 using Business.Services.Concrete.Lookup;
+using Business.Services.Internal;
 using Configuration;
 using Core.ServiceModules;
 using DataAccess;
@@ -23,10 +26,13 @@ namespace Business.ServiceModules
     {
         public void Load(IServiceCollection services)
         {
+            services.AddSingleton<RabbitMqClientService>();
+            services.AddSingleton<NotificationService>();
+
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IGameService, GameService>();
-            services.AddScoped<IMediaService, MediaService>();
+            services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ISliderContentService, SliderContentService>();
 
             services.AddScoped<IAuthService, AuthService>();
