@@ -36,6 +36,7 @@ namespace Business.ServiceModules
             services.AddScoped<ISliderContentService, SliderContentService>();
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IPermissionService, PermissionService>();

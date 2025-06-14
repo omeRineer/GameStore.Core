@@ -4,6 +4,7 @@ using MeArch.Module.Security.Entities.Master;
 using MeArch.Module.Security.Entities.Menu;
 using Models.Identity.Menu;
 using Models.Identity.Permission;
+using Models.Identity.Profile;
 using Models.Identity.Role;
 using Models.Identity.User;
 using System;
@@ -22,6 +23,11 @@ namespace Business.Mapping.AutoMapper
             CreateMap<CreateUserRequest, User>();
             CreateMap<UpdateUserRequest, User>();
             CreateMap<User, SingleUserResponse>();
+            #endregion
+
+            #region Profile
+            CreateMap<User, GetProfileResponse>();
+            CreateMap<UpdateProfileRequest, User>();
             #endregion
 
             #region Role
