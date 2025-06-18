@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MeArch.Module.Security.Service
@@ -71,6 +72,12 @@ namespace MeArch.Module.Security.Service
                 {
                     claims.Add(new Claim("Permission", permission.Key));
                 }
+
+            if (user.UserClaims != null)
+            {
+                var specialClaims = JsonSerializer.Serialize(user.UserClaims.ToDictionary(k => k.Type, v => v.Value));
+                claims.Add(new Claim("Special", specialClaims));
+            }
 
             return claims;
         }

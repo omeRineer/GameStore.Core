@@ -29,7 +29,6 @@ namespace GameStore.API.Web.Controllers.Main
             return Result(result);
         }
 
-        [Benchmark(logTypes:LogType.Notification)]
         [HttpGet("SessionMenus")]
         [Authorize]
         public async Task<IActionResult> GetSessionMenusAsync()
@@ -89,24 +88,6 @@ namespace GameStore.API.Web.Controllers.Main
         public async Task<IActionResult> GetPermissionsAsync(Guid id)
         {
             var result = await _menuService.GetPermissionsAsync(id);
-
-            return Result(result);
-        }
-
-        [HttpPost("SetRoles")]
-        [Authorize("SuperAdmin,API.Web.Menus.SetRoles")]
-        public async Task<IActionResult> SetRolesAsync(SetMenuRolesRequest request)
-        {
-            var result = await _menuService.SetRolesAsync(request);
-
-            return Result(result);
-        }
-
-        [HttpGet("GetRoles/{id}")]
-        [Authorize("SuperAdmin,API.Web.Menus.GetRoles")]
-        public async Task<IActionResult> GetRolesAsync(Guid id)
-        {
-            var result = await _menuService.GetRolesAsync(id);
 
             return Result(result);
         }

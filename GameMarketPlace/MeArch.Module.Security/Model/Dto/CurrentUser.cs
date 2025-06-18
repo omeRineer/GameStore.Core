@@ -15,6 +15,7 @@ namespace MeArch.Module.Security.Model.Dto
         public string? Email { get; init; }
         public string[]? Roles { get; init; }
         public string[]? Permissions { get; init; }
+        public Dictionary<string, string>? Claims { get; set; }
         public bool IsAuthenticated { get; set; }
 
     }

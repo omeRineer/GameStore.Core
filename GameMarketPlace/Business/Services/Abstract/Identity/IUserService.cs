@@ -16,7 +16,9 @@ namespace Business.Services.Abstract.Identity
         Task<IResult> DeleteAsync(Guid id);
         Task<IResult> SetPermissionsAsync(SetUserPermissionsRequest request);
         Task<IResult> SetRolesAsync(SetUserRolesRequest request);
+        Task<IResult> SetClaimsAsync(SetUserClaimsRequest request);
         Task<IDataResult<GetUserRolesResponse>> GetRolesAsync(Guid id);
         Task<IDataResult<GetUserPermissionsResponse>> GetPermissionsAsync(Guid id);
+        Task<IDataResult<GetUserClaimsResponse>> GetClaimsAsync(Guid id);
     }
 }

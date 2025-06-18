@@ -24,16 +24,14 @@ namespace Business.Services.Concrete
     {
         readonly CurrentUser CurrentUser;
         readonly IEfMenuRepository _menuRepository;
-        readonly IEfMenuRoleRepository _menuRoleRepository;
         readonly IEfMenuPermissionRepository _menuPermissionRepository;
         readonly IMapper _mapper;
         readonly IEfUserRepository _userRepository;
 
-        public MenuService(IMapper mapper, IEfMenuRepository menuRepository, IEfMenuRoleRepository menuRoleRepository, IEfMenuPermissionRepository menuPermissionRepository, CurrentUser currentUser, IEfUserRepository userRepository)
+        public MenuService(IMapper mapper, IEfMenuRepository menuRepository, IEfMenuPermissionRepository menuPermissionRepository, CurrentUser currentUser, IEfUserRepository userRepository)
         {
             _mapper = mapper;
             _menuRepository = menuRepository;
-            _menuRoleRepository = menuRoleRepository;
             _menuPermissionRepository = menuPermissionRepository;
             CurrentUser = currentUser;
             _userRepository = userRepository;
@@ -98,27 +96,21 @@ namespace Business.Services.Concrete
             return new SuccessDataResult<GetMenuPermissionsResponse>(result);
         }
 
-        public async Task<IDataResult<GetMenuRolesResponse>> GetRolesAsync(Guid id)
-        {
-            var menuRoles = await _menuRoleRepository.GetListAsync(f => f.MenuId == id);
-
-            var result = new GetMenuRolesResponse
-            {
-                Roles = menuRoles.Select(s => s.RoleId).ToList()
-            };
-
-            return new SuccessDataResult<GetMenuRolesResponse>(result);
-        }
-
         public async Task<IDataResult<GetMenusResponse>> GetSessionMenusAsync()
         {
-            var user = await _userRepository.GetSingleAsync(f => f.Id == CurrentUser.Id, i => i.Include(x => x.UserRoles).Include(x => x.UserPermissions));
+            var user = await _userRepository.GetSingleAsync(f => f.Id == CurrentUser.Id, i => i.Include(x => x.UserRoles).ThenInclude(x => x.Role).ThenInclude(x => x.RolePermissions).Include(x => x.UserPermissions));
             var userRoles = user.UserRoles.Select(s => s.RoleId);
-            var userPermissions = user.UserPermissions.Select(s => s.PermissionId);
 
-            var menuList = await _menuRepository.GetListAsync(f => f.Permissions.Any(x => userPermissions.Contains(x.PermissionId)) ||
-                                                                   f.Roles.Any(x => userRoles.Contains(x.RoleId)),
-                                                              includes: i => i.Include(x => x.Permissions).Include(x => x.Roles));
+            var userPermissions = new List<Guid>();
+
+            if (user.UserPermissions != null)
+                userPermissions.AddRange(user.UserPermissions.Select(s => s.PermissionId));
+
+            if (user.UserRoles.SelectMany(s => s.Role.RolePermissions) != null)
+                userPermissions.AddRange(user.UserRoles.SelectMany(s => s.Role.RolePermissions).Select(s => s.PermissionId));
+
+            var menuList = await _menuRepository.GetListAsync(f => f.Permissions.Any(x => userPermissions.Contains(x.PermissionId)),
+                                                              includes: i => i.Include(x => x.Permissions));
 
             var result = new GetMenusResponse
             {
@@ -154,27 +146,6 @@ namespace Business.Services.Concrete
 
             if (newMenuPermissions.Any() || removedMenuPermissions.Any())
                 await _menuPermissionRepository.SaveAsync();
-
-            return new SuccessResult();
-        }
-
-        public async Task<IResult> SetRolesAsync(SetMenuRolesRequest request)
-        {
-            var menuRoles = await _menuRoleRepository.GetListAsync(f => f.MenuId == request.MenuId);
-            var matchesResult = BusinessHelper.GetMatchesList(menuRoles.Select(s => s.RoleId), request.Roles);
-
-            var removedMenuRoles = menuRoles.Where(f => matchesResult.MisMatchesSource.Contains(f.RoleId));
-            var newMenuRoles = matchesResult.MisMatchesCluster.Select(s => new MenuRole
-            {
-                RoleId = s,
-                MenuId = request.MenuId
-            });
-
-            if (removedMenuRoles.Any()) await _menuRoleRepository.DeleteRangeAsync(removedMenuRoles);
-            if (newMenuRoles.Any()) await _menuRoleRepository.AddRangeAsync(newMenuRoles);
-
-            if (removedMenuRoles.Any() || newMenuRoles.Any())
-                await _menuRoleRepository.SaveAsync();
 
             return new SuccessResult();
         }

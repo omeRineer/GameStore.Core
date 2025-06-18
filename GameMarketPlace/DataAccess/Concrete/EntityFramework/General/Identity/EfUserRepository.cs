@@ -28,6 +28,7 @@ namespace DataAccess.Concrete.EntityFramework.General.Identity
                                 .ThenInclude(i => i.Permission)
                           .Include(i => i.UserPermissions)
                                 .ThenInclude(i => i.Permission)
+                          .Include(i => i.UserClaims)
                                 .SingleOrDefaultAsync(f => f.UserName == userName && f.Password == password);
 
         public async Task<bool> IsExistByUserNameAndPassword(string userName, string password)

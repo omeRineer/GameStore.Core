@@ -22,9 +22,10 @@ namespace Business.Services.Concrete.Identity
         readonly IEfPermissionRepository _permissionRepository;
         readonly IEfRoleRepository _roleRepository;
         readonly IEfUserRepository _userRepository;
+        readonly IEfUserClaimRepository _userClaimRepository;
         readonly IMapper _mapper;
 
-        public UserService(IEfUserPermissionRepository userPermissionRepository, IEfUserRoleRepository userRoleRepository, IEfPermissionRepository permissionRepository, IEfRoleRepository roleRepository, IEfUserRepository userRepository, IMapper mapper)
+        public UserService(IEfUserPermissionRepository userPermissionRepository, IEfUserRoleRepository userRoleRepository, IEfPermissionRepository permissionRepository, IEfRoleRepository roleRepository, IEfUserRepository userRepository, IMapper mapper, IEfUserClaimRepository userClaimRepository)
         {
             _userPermissionRepository = userPermissionRepository;
             _userRoleRepository = userRoleRepository;
@@ -32,6 +33,7 @@ namespace Business.Services.Concrete.Identity
             _roleRepository = roleRepository;
             _userRepository = userRepository;
             _mapper = mapper;
+            _userClaimRepository = userClaimRepository;
         }
 
         public async Task<IResult> CreateAsync(CreateUserRequest request)
@@ -39,7 +41,7 @@ namespace Business.Services.Concrete.Identity
             var newUser = _mapper.Map<User>(request);
 
             newUser.Key = UserKeyHelper.GenerateUserKey("GMST");
-            while (await _userRepository.IsExistAsync(i=> i.Key == newUser.Key))
+            while (await _userRepository.IsExistAsync(i => i.Key == newUser.Key))
                 newUser.Key = UserKeyHelper.GenerateUserKey("GMST");
 
             if (request.Roles != null && request.Roles.Length > 0)
@@ -82,6 +84,15 @@ namespace Business.Services.Concrete.Identity
             return new SuccessDataResult<SingleUserResponse>(result);
         }
 
+        public async Task<IDataResult<GetUserClaimsResponse>> GetClaimsAsync(Guid id)
+        {
+            var claims = await _userClaimRepository.GetDictionariesAsync(k => k.Type, v => v.Value, f => f.UserId == id);
+
+            var result = new GetUserClaimsResponse { Claims = claims };
+
+            return new SuccessDataResult<GetUserClaimsResponse>(result);
+        }
+
         public async Task<IDataResult<GetUserPermissionsResponse>> GetPermissionsAsync(Guid id)
         {
             var userPermissions = await _userPermissionRepository.GetListAsync(f => f.UserId == id);
@@ -104,6 +115,28 @@ namespace Business.Services.Concrete.Identity
             };
 
             return new SuccessDataResult<GetUserRolesResponse>(result);
+        }
+
+        public async Task<IResult> SetClaimsAsync(SetUserClaimsRequest request)
+        {
+            var userClaims = await _userClaimRepository.GetListAsync(f => f.UserId == request.UserId);
+            var matchesResult = BusinessHelper.GetMatchesList(userClaims.Select(s => s.Type), request.Claims.Select(s => s.Key));
+
+            var removedUserClaims = userClaims.Where(f => matchesResult.MisMatchesSource.Contains(f.Type));
+            var newUserClaims = matchesResult.MisMatchesCluster.Select(s => new UserClaim
+            {
+                Type = s,
+                Value = request.Claims[s],
+                UserId = request.UserId
+            });
+
+            if (removedUserClaims.Any()) await _userClaimRepository.DeleteRangeAsync(removedUserClaims);
+            if (newUserClaims.Any()) await _userClaimRepository.AddRangeAsync(newUserClaims);
+
+            if (newUserClaims.Any() || removedUserClaims.Any())
+                await _userClaimRepository.SaveAsync();
+
+            return new SuccessResult();
         }
 
         public async Task<IResult> SetPermissionsAsync(SetUserPermissionsRequest request)

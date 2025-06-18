@@ -17,7 +17,6 @@ namespace MeArch.Module.Security.Entities.Menu
         public string? Icon { get; set; }
 
         public Menu? ParentMenu { get; set; }
-        public IEnumerable<MenuRole>? Roles { get; set; }
         public IEnumerable<MenuPermission>? Permissions { get; set; }
 
     }

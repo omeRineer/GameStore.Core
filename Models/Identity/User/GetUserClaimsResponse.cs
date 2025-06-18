@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Identity.Menu
+namespace Models.Identity.User
 {
-    public class GetMenuRolesResponse
+    public class GetUserClaimsResponse
     {
-        public List<Guid>? Roles { get; set; }
+        public Dictionary<string, string>? Claims { get; set; }
     }
 }

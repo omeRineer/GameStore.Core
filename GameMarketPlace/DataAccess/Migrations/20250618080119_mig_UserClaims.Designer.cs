@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250618080119_mig_UserClaims")]
+    partial class mig_UserClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -648,6 +650,33 @@ namespace DataAccess.Migrations
                     b.ToTable("MenuPermission", (string)null);
                 });
 
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("MenuRoles", (string)null);
+                });
+
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.StatusLookup", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.ProcessGroups.ProcessGroup", "ProcessGroup")
@@ -788,6 +817,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Permission");
                 });
 
+            modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.MenuRole", b =>
+                {
+                    b.HasOne("MeArch.Module.Security.Entities.Menu.Menu", "Menu")
+                        .WithMany("Roles")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MeArch.Module.Security.Entities.Master.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Core.Entities.Concrete.ProcessGroups.ProcessGroup", b =>
                 {
                     b.Navigation("StatusLookup");
@@ -824,6 +872,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("MeArch.Module.Security.Entities.Menu.Menu", b =>
                 {
                     b.Navigation("Permissions");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

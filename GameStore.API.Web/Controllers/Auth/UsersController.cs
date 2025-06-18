@@ -17,7 +17,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpGet("{id}")]
-        [Authorize("SuperAdmin,API.Web.Users.Get")]
+        [Authorize("API.Web.Users.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _userService.GetAsync(id);
@@ -26,7 +26,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,API.Web.Users.Create")]
+        [Authorize("API.Web.Users.Create")]
         public async Task<IActionResult> CreateAsync(CreateUserRequest request)
         {
             var result = await _userService.CreateAsync(request);
@@ -35,7 +35,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,API.Web.Users.Update")]
+        [Authorize("API.Web.Users.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateUserRequest request)
         {
             var result = await _userService.UpdateAsync(request);
@@ -44,7 +44,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,API.Web.Users.Delete")]
+        [Authorize("API.Web.Users.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _userService.DeleteAsync(id);
@@ -52,8 +52,17 @@ namespace GameStore.API.Web.Controllers.Auth
             return Result(result);
         }
 
+        [HttpPost("SetClaims")]
+        [Authorize("API.Web.Users.SetClaims")]
+        public async Task<IActionResult> SetClaimsAsync(SetUserClaimsRequest request)
+        {
+            var result = await _userService.SetClaimsAsync(request);
+
+            return Result(result);
+        }
+
         [HttpPost("SetRoles")]
-        [Authorize("SuperAdmin,API.Web.Users.SetRoles")]
+        [Authorize("API.Web.Users.SetRoles")]
         public async Task<IActionResult> SetRolesAsync(SetUserRolesRequest request)
         {
             var result = await _userService.SetRolesAsync(request);
@@ -62,7 +71,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpPost("SetPermissions")]
-        [Authorize("SuperAdmin,API.Web.Users.SetPermissions")]
+        [Authorize("API.Web.Users.SetPermissions")]
         public async Task<IActionResult> SetPermissionsAsync(SetUserPermissionsRequest request)
         {
             var result = await _userService.SetPermissionsAsync(request);
@@ -71,7 +80,7 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpGet("GetRoles/{id}")]
-        [Authorize("SuperAdmin,API.Web.Users.GetRoles")]
+        [Authorize("API.Web.Users.GetRoles")]
         public async Task<IActionResult> GetRolesAsync([FromRoute]Guid id)
         {
             var result = await _userService.GetRolesAsync(id);
@@ -80,10 +89,19 @@ namespace GameStore.API.Web.Controllers.Auth
         }
 
         [HttpGet("GetPermissions/{id}")]
-        [Authorize("SuperAdmin,API.Web.Users.GetPermissions")]
+        [Authorize("API.Web.Users.GetPermissions")]
         public async Task<IActionResult> GetPermissionsAsync([FromRoute] Guid id)
         {
             var result = await _userService.GetPermissionsAsync(id);
+
+            return Result(result);
+        }
+
+        [HttpGet("GetClaims/{id}")]
+        [Authorize("API.Web.Users.GetClaims")]
+        public async Task<IActionResult> GetClaimsAsync([FromRoute] Guid id)
+        {
+            var result = await _userService.GetClaimsAsync(id);
 
             return Result(result);
         }

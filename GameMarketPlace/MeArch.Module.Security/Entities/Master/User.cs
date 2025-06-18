@@ -21,5 +21,6 @@ namespace MeArch.Module.Security.Entities.Master
 
         public IEnumerable<UserRole>? UserRoles { get; set; }
         public IEnumerable<UserPermission>? UserPermissions { get; set; }
+        public IEnumerable<UserClaim>? UserClaims { get; set; }
     }
 }

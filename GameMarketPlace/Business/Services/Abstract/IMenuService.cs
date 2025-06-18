@@ -20,7 +20,5 @@ namespace Business.Services.Abstract
         Task<IResult> DeleteAsync(Guid id);
         Task<IResult> SetPermissionsAsync(SetMenuPermissionsRequest request);
         Task<IDataResult<GetMenuPermissionsResponse>> GetPermissionsAsync(Guid id);
-        Task<IResult> SetRolesAsync(SetMenuRolesRequest request);
-        Task<IDataResult<GetMenuRolesResponse>> GetRolesAsync(Guid id);
     }
 }

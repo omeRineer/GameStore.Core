@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace Business.ServiceModules
 {
@@ -32,7 +33,7 @@ namespace Business.ServiceModules
                 options.UseSqlServer(CoreConfiguration.DataBaseOptions.ConnectionString);
             });
 
-            
+
 
             services.AddCors(options =>
                             options.AddDefaultPolicy(builder =>
@@ -71,7 +72,8 @@ namespace Business.ServiceModules
                 var user = httpContextAccessor.HttpContext?.User;
 
                 if (user != null && user.Identity.IsAuthenticated)
-                    return new CurrentUser
+                {
+                    var currentUser = new CurrentUser
                     {
                         Id = Guid.Parse(user.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)?.Value),
                         Key = user.Claims.FirstOrDefault(f => f.Type == "Key")?.Value,
@@ -82,6 +84,13 @@ namespace Business.ServiceModules
                         Permissions = user.Claims.Where(f => f.Type == "Permission")?.Select(s => s.Value).ToArray(),
                         IsAuthenticated = user.Identity.IsAuthenticated
                     };
+
+                    if (user.Claims.Any(x => x.Type == "Special"))
+                        currentUser.Claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(user.Claims.FirstOrDefault(f => f.Type == "Special")?.Value);
+
+                    return currentUser;
+                }
+
 
                 return new CurrentUser();
             });

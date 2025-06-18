@@ -47,6 +47,9 @@ namespace MeArch.Module.Security.Extensions
             modelBuilder.Entity<RolePermission>()
                         .ToTable("RolePermissions");
 
+            modelBuilder.Entity<UserClaim>()
+                        .ToTable("UserClaims");
+
             return modelBuilder;
         }
 
@@ -54,9 +57,6 @@ namespace MeArch.Module.Security.Extensions
         {
             modelBuilder.Entity<Menu>()
                         .ToTable("Menus");
-
-            modelBuilder.Entity<MenuRole>()
-                        .ToTable("MenuRoles");
 
             modelBuilder.Entity<MenuPermission>()
                         .ToTable("MenuPermission");
