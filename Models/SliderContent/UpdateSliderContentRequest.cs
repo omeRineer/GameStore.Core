@@ -11,7 +11,7 @@ namespace Models.SliderContent
         public string? To { get; set; }
         public bool IsActive { get; set; }
         public int Priority { get; set; }
-        public DTO.File? Image { get; set; }
+        public DTO.File? CoverImage { get; set; }
     }
 
 }

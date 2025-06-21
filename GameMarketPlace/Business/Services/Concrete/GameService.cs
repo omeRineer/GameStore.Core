@@ -15,20 +15,23 @@ using System.Threading.Tasks;
 using System.IO;
 using Entities.Enum.Type;
 using Models.Game;
+using Models.Blog;
 
 namespace Business.Services.Concrete
 {
     public class GameService : IGameService
     {
         readonly IEfGameRepository _gameRepository;
+        readonly IEfMediaRepository _mediaRepository;
         readonly NET.IHttpContextAccessor HttpContextAccessor;
         readonly IMapper _mapper;
 
-        public GameService(IEfGameRepository gameRepository, IMapper mapper, NET.IHttpContextAccessor httpContextAccessor)
+        public GameService(IEfGameRepository gameRepository, IMapper mapper, NET.IHttpContextAccessor httpContextAccessor, IEfMediaRepository mediaRepository)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
             HttpContextAccessor = httpContextAccessor;
+            _mediaRepository = mediaRepository;
         }
 
         public async Task<IResult> CreateAsync(CreateGameRequest request)
@@ -37,13 +40,18 @@ namespace Business.Services.Concrete
             entity.GenerateId();
 
             await _gameRepository.AddAsync(entity);
-            //await _mediaService.AddAsync(new Media
-            //{
-            //    EntityId = entity.Id,
-            //    TypeId = (int)MediaType.GameCoverImage,
-            //    Node = request.CoverImage.Node,
-            //    Name = request.CoverImage.Name
-            //});
+            if (request.CoverImage != null)
+            {
+                var coverImage = new Media
+                {
+                    Name = request.CoverImage.Name,
+                    EntityId = entity.Id,
+                    Url = request.CoverImage.Url,
+                    TypeId = (int)MediaType.GameCoverImage
+                };
+
+                await _mediaRepository.AddAsync(coverImage);
+            }
             await _gameRepository.SaveAsync();
 
             return new SuccessResult();
@@ -52,8 +60,10 @@ namespace Business.Services.Concrete
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = await _gameRepository.GetSingleAsync(f => f.Id == id);
+            var mediaList = await _mediaRepository.GetListAsync(f => f.EntityId == id);
 
             await _gameRepository.DeleteAsync(entity);
+            await _mediaRepository.DeleteRangeAsync(mediaList);
             await _gameRepository.SaveAsync();
 
             return new SuccessResult();
@@ -64,9 +74,9 @@ namespace Business.Services.Concrete
             var entity = await _gameRepository.GetSingleAsync(f => f.Id == id, i => i.Include(x => x.Category));
             var mappedEntity = _mapper.Map<SingleGameResponse>(entity);
 
-            //var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, MediaType.GameCoverImage);
-            //if (coverImage.Data != null)
-            //    mappedEntity.CoverImage = new MA.File { Node = coverImage.Data.Node, Name = coverImage.Data.Name };
+            var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameCoverImage);
+            if (coverImage != null)
+                mappedEntity.CoverImage = new MA.File { Url = coverImage.Url, Name = coverImage.Name };
 
             return new SuccessDataResult<SingleGameResponse>(mappedEntity);
         }
@@ -77,29 +87,27 @@ namespace Business.Services.Concrete
             var mappedEntity = _mapper.Map(updateGameRequest, entity);
 
             await _gameRepository.UpdateAsync(entity);
-            //if (updateGameRequest.CoverImage != null)
-            //{
-            //    var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, MediaType.GameCoverImage);
+            if (updateGameRequest.CoverImage != null)
+            {
+                var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == entity.Id && f.TypeId == (int)MediaType.GameCoverImage);
 
-            //    // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
-            //    if (coverImage.Data != null)
-            //    {
-            //        coverImage.Data.Name = updateGameRequest.CoverImage.Name;
-            //        coverImage.Data.Node = updateGameRequest.CoverImage.Node;
-            //        await _mediaService.EditAsync(coverImage.Data);
-            //    }
-            //    else
-            //        await _mediaService.AddAsync(new Media
-            //        {
-            //            TypeId = (int)MediaType.GameCoverImage,
-            //            Node = updateGameRequest.CoverImage.Node,
-            //            Name = updateGameRequest.CoverImage.Name,
-            //            EntityId = entity.Id
-            //        });
-            //}
+                // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
+                if (coverImage != null)
+                {
+                    coverImage.Name = updateGameRequest.CoverImage.Name;
+                    coverImage.Url = updateGameRequest.CoverImage.Url;
+                    await _mediaRepository.UpdateAsync(coverImage);
+                }
+                else
+                    await _mediaRepository.AddAsync(new Media
+                    {
+                        TypeId = (int)MediaType.GameCoverImage,
+                        Name = updateGameRequest.CoverImage.Name,
+                        EntityId = entity.Id,
+                        Url = updateGameRequest.CoverImage.Url
+                    });
+            }
             await _gameRepository.SaveAsync();
-
-            
 
             return new SuccessResult();
         }

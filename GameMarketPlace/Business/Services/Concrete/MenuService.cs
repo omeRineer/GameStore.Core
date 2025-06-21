@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Business.Aspects;
 using Business.Helpers;
 using Business.Services.Abstract;
 using Business.Services.Abstract.Identity;
@@ -111,7 +112,6 @@ namespace Business.Services.Concrete
 
             var menuList = await _menuRepository.GetListAsync(f => f.Permissions.Any(x => userPermissions.Contains(x.PermissionId)),
                                                               includes: i => i.Include(x => x.Permissions));
-
             var result = new GetMenusResponse
             {
                 Menus = menuList.Select(s => new GetMenus_Item

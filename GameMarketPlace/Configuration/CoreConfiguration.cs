@@ -26,6 +26,7 @@ namespace Configuration
         public static FileOptions FileOptions { get => Configuration.GetSection("FileOptions").Get<FileOptions>(); }
         public static APIOptions APIOptions { get => Configuration.GetSection("APIOptions").Get<APIOptions>(); }
         public static RabbitMqOptions RabbitMqOptions { get => Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>(); }
+        public static ImagekitOptions ImagekitOptions { get => Configuration.GetSection("ImagekitOptions").Get<ImagekitOptions>(); }
 
     }
 }

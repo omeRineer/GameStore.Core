@@ -1,4 +1,6 @@
-﻿using Core.ServiceModules;
+﻿using Castle.DynamicProxy;
+using Core.ServiceModules;
+using Core.Utilities.Interceptor;
 using Core.Utilities.ServiceTools;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,6 +22,27 @@ namespace Core.Extensions
                     serviceModule.Load(services);
                 }
             }
+
+            return services;
+        }
+
+        
+        static ProxyGenerator proxyGenerator = new ProxyGenerator();
+        public static IServiceCollection AddProxiedScoped<TService, TImplemented>(this IServiceCollection services)
+            where TService : class
+            where TImplemented : class, TService
+        {
+            
+            services.AddScoped<TImplemented>();
+            services.AddScoped<TService>(sp =>
+            {
+                var implemented = sp.GetService<TImplemented>();
+
+                return proxyGenerator.CreateInterfaceProxyWithTarget<TService>(implemented, new ProxyGenerationOptions
+                {
+                    Selector = new InterceptorSelector()
+                });
+            });
 
             return services;
         }

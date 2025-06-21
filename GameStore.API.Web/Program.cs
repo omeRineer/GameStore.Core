@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(container => container.RegisterModule<AutofacDependencyResolversModule>());
 
-await builder.Services.AddRabbitMqAsync();
+//await builder.Services.AddRabbitMqAsync();
 builder.Services.AddServiceModules(new IServiceModule[]
 {
     new BusinessServiceModule(),
@@ -56,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomExceptionHandler();
 
 app.UseCors();
 

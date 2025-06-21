@@ -21,6 +21,7 @@ namespace DataAccess.ServiceModules
             services.AddScoped<IEfGameRepository, EfGameRepository>();
             services.AddScoped<IEfSliderContentRepository, EfSliderContentRepository>();
             services.AddScoped<IEfBlogRepository, EfBlogRepository>();
+            services.AddScoped<IEfMediaRepository, EfMediaRepository>();
 
             services.AddScoped<IEfPermissionRepository, EfPermissionRepository>();
             services.AddScoped<IEfMenuRepository, EfMenuRepository>();

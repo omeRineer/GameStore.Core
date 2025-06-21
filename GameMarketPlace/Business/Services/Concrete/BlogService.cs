@@ -18,12 +18,14 @@ namespace Business.Services.Concrete
     public class BlogService : IBlogService
     {
         readonly IEfBlogRepository _blogRepository;
+        readonly IEfMediaRepository _mediaRepository;
         readonly IMapper _mapper;
 
-        public BlogService(IEfBlogRepository blogRepository, IMapper mapper)
+        public BlogService(IEfBlogRepository blogRepository, IMapper mapper, IEfMediaRepository mediaRepository)
         {
             _blogRepository = blogRepository;
             _mapper = mapper;
+            _mediaRepository = mediaRepository;
         }
 
         public async Task<IResult> CreateAsync(CreateBlogRequest createBlogRequest)
@@ -32,13 +34,18 @@ namespace Business.Services.Concrete
             entity.GenerateId();
 
             await _blogRepository.AddAsync(entity);
-            //await _mediaService.AddAsync(new Media
-            //{
-            //    EntityId = entity.Id,
-            //    TypeId = (int)MediaType.BlogCoverImage,
-            //    Node = createBlogRequest.CoverImage.Node,
-            //    Name = createBlogRequest.CoverImage.Name
-            //});
+            if (createBlogRequest.CoverImage != null)
+            {
+                var coverImage = new Media
+                {
+                    Name = createBlogRequest.CoverImage.Name,
+                    EntityId = entity.Id,
+                    Url = createBlogRequest.CoverImage.Url,
+                    TypeId = (int)MediaType.BlogCoverImage
+                };
+
+                await _mediaRepository.AddAsync(coverImage);
+            }
             await _blogRepository.SaveAsync();
 
             return new SuccessResult();
@@ -47,8 +54,10 @@ namespace Business.Services.Concrete
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = await _blogRepository.GetSingleAsync(f => f.Id == id);
+            var mediaList = await _mediaRepository.GetListAsync(f => f.EntityId == id);
 
             await _blogRepository.DeleteAsync(entity);
+            await _mediaRepository.DeleteRangeAsync(mediaList);
             await _blogRepository.SaveAsync();
 
             return new SuccessResult();
@@ -59,9 +68,9 @@ namespace Business.Services.Concrete
             var entity = await _blogRepository.GetSingleAsync(f => f.Id == id);
             var mappedEntity = _mapper.Map<SingleBlogResponse>(entity);
 
-            //var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, MediaType.BlogCoverImage);
-            //if (coverImage.Data != null)
-            //    mappedEntity.CoverImage = new MA.File { Node = coverImage.Data.Node, Name = coverImage.Data.Name };
+            var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.BlogCoverImage);
+            if (coverImage != null)
+                mappedEntity.CoverImage = new MA.File { Url = coverImage.Url, Name = coverImage.Name };
 
             return new SuccessDataResult<SingleBlogResponse>(mappedEntity);
         }
@@ -73,26 +82,26 @@ namespace Business.Services.Concrete
 
             await _blogRepository.UpdateAsync(entity);
 
-            //if (updateBlogRequest.CoverImage != null)
-            //{
-            //    var coverImage = await _mediaService.GetSingleByMediaTypeAsync(entity.Id, MediaType.BlogCoverImage);
+            if (updateBlogRequest.CoverImage != null)
+            {
+                var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == entity.Id && f.TypeId == (int)MediaType.BlogCoverImage);
 
-            //    // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
-            //    if (coverImage.Data != null)
-            //    {
-            //        coverImage.Data.Name = updateBlogRequest.CoverImage.Name;
-            //        coverImage.Data.Node = updateBlogRequest.CoverImage.Node;
-            //        await _mediaService.EditAsync(coverImage.Data);
-            //    }
-            //    else
-            //        await _mediaService.AddAsync(new Media
-            //        {
-            //            TypeId = (int)MediaType.BlogCoverImage,
-            //            Node = updateBlogRequest.CoverImage.Node,
-            //            Name = updateBlogRequest.CoverImage.Name,
-            //            EntityId = entity.Id
-            //        });
-            //}
+                // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
+                if (coverImage != null)
+                {
+                    coverImage.Name = updateBlogRequest.CoverImage.Name;
+                    coverImage.Url = updateBlogRequest.CoverImage.Url;
+                    await _mediaRepository.UpdateAsync(coverImage);
+                }
+                else
+                    await _mediaRepository.AddAsync(new Media
+                    {
+                        TypeId = (int)MediaType.BlogCoverImage,
+                        Name = updateBlogRequest.CoverImage.Name,
+                        EntityId = entity.Id,
+                        Url = updateBlogRequest.CoverImage.Url
+                    });
+            }
 
             await _blogRepository.SaveAsync();
 

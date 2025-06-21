@@ -21,6 +21,8 @@ using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using Imagekit.Sdk;
+using Castle.DynamicProxy;
 
 namespace Business.ServiceModules
 {
@@ -47,6 +49,9 @@ namespace Business.ServiceModules
                 opt.AddGlobalIgnore("EditDate");
             }, typeof(BusinessServiceModule).Assembly);
 
+            services.AddScoped(i => new ImagekitClient(CoreConfiguration.ImagekitOptions.PublicApiKey,
+                                                       CoreConfiguration.ImagekitOptions.PrivateApiKey,
+                                                       CoreConfiguration.ImagekitOptions.Url));
 
             #region Json Web Token Options
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

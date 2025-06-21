@@ -5,7 +5,9 @@ using Business.Services.Abstract.Lookup;
 using Business.Services.Concrete;
 using Business.Services.Concrete.Identity;
 using Business.Services.Concrete.Lookup;
+using Business.Services.External;
 using Business.Services.Internal;
+using Castle.DynamicProxy;
 using Configuration;
 using Core.ServiceModules;
 using DataAccess;
@@ -17,8 +19,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Extensions;
 
 namespace Business.ServiceModules
 {
@@ -29,19 +33,20 @@ namespace Business.ServiceModules
             services.AddSingleton<RabbitMqClientService>();
             services.AddSingleton<NotificationService>();
 
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<IGameService, GameService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<ISliderContentService, SliderContentService>();
+            services.AddProxiedScoped<ICategoryService, CategoryService>();
+            services.AddProxiedScoped<IBlogService, BlogService>();
+            services.AddProxiedScoped<IGameService, GameService>();
+            services.AddProxiedScoped<IMenuService, MenuService>();
+            services.AddProxiedScoped<ISliderContentService, SliderContentService>();
+            services.AddScoped<ImageKitStorageService>();
 
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IProfileService, ProfileService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddProxiedScoped<IAuthService, AuthService>();
+            services.AddProxiedScoped<IProfileService, ProfileService>();
+            services.AddProxiedScoped<IUserService, UserService>();
+            services.AddProxiedScoped<IRoleService, RoleService>();
+            services.AddProxiedScoped<IPermissionService, PermissionService>();
 
-            services.AddScoped<ILookupService, LookupService>();
+            services.AddProxiedScoped<ILookupService, LookupService>();
         }
     }
 }
