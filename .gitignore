@@ -9,9 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-appsettings.Development.json
-appsettings.Local.json
-appsettings.Production.json
+appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -364,3 +362,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Core.sln
+/GameMarketPlace/Configuration/appsettings.Development.json
+/GameMarketPlace/Configuration/appsettings.Local.json
+/GameMarketPlace/Configuration/appsettings.Production.json
