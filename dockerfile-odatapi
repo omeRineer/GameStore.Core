@@ -3,10 +3,11 @@
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 EXPOSE 1400
+EXPOSE 1401
 WORKDIR /app
 
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ASPNETCORE_URLS="http://*:1400"
+ENV ASPNETCORE_URLS="http://*:1400;https://*:1401"
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build

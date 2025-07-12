@@ -5,7 +5,6 @@ using Entities.Main;
 using NET = Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using MA = Core.Entities.DTO.File;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +15,7 @@ using Entities.Enum.Type;
 using Business.Helpers;
 using Models.SliderContent;
 using Models.Blog;
+using Models.Media;
 
 namespace Business.Services.Concrete
 {
@@ -75,7 +75,7 @@ namespace Business.Services.Concrete
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)mediaType);
             if (coverImage != null)
-                mappedEntity.CoverImage = new MA.File { Url = coverImage.Url, Name = coverImage.Name };
+                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
 
             return new SuccessDataResult<SingleSliderContentResponse>(mappedEntity);
         }

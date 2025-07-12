@@ -1,5 +1,5 @@
-﻿using DTO = Core.Entities.DTO.File;
-using System;
+﻿using System;
+using Models.Media;
 
 namespace Models.Blog
 {
@@ -9,6 +9,6 @@ namespace Models.Blog
         public string Header { get; set; }
         public string Content { get; set; }
         public bool? Status { get; set; }
-        public DTO.File? CoverImage { get; set; }
+        public PostMediaModel? CoverImage { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using DTO = Core.Entities.DTO.File;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Media;
 
 namespace Models.Game
 {
@@ -16,6 +16,6 @@ namespace Models.Game
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public DTO.File? CoverImage { get; set; }
+        public PostMediaModel? CoverImage { get; set; }
     }
 }

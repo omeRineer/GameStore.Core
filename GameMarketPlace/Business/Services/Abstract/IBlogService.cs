@@ -1,5 +1,4 @@
-﻿using Core.Entities.DTO.File;
-using Core.Utilities.ResultTool;
+﻿using Core.Utilities.ResultTool;
 using Models.Blog;
 using System;
 using System.Collections.Generic;

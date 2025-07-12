@@ -14,5 +14,7 @@ namespace Business.Services.Abstract
         Task<IResult> CreateAsync(CreateGameRequest request);
         Task<IResult> UpdateAsync(UpdateGameRequest updateGameRequest);
         Task<IResult> DeleteAsync(Guid id);
+        Task<IResult> UploadImagesAsync(UploadGameImagesRequest request);
+        Task<IDataResult<GetGameImagesResponse>> GetImagesAsync(Guid id);
     }
 }

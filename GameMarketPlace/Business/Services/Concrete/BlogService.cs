@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Business.Services.Abstract;
-using MA = Core.Entities.DTO.File;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General;
 using Entities.Main;
@@ -12,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities.Enum.Type;
 using Models.Blog;
+using Models.Media;
 
 namespace Business.Services.Concrete
 {
@@ -70,7 +70,7 @@ namespace Business.Services.Concrete
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.BlogCoverImage);
             if (coverImage != null)
-                mappedEntity.CoverImage = new MA.File { Url = coverImage.Url, Name = coverImage.Name };
+                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
 
             return new SuccessDataResult<SingleBlogResponse>(mappedEntity);
         }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Business.Services.Abstract;
-using MA = Core.Entities.DTO.File;
 using Core.DataAccess;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General;
@@ -16,6 +15,10 @@ using System.IO;
 using Entities.Enum.Type;
 using Models.Game;
 using Models.Blog;
+using Business.Helpers;
+using MeArch.Module.Security.Entities.Master;
+using DataAccess.Concrete.EntityFramework.General.Identity;
+using Models.Media;
 
 namespace Business.Services.Concrete
 {
@@ -23,14 +26,12 @@ namespace Business.Services.Concrete
     {
         readonly IEfGameRepository _gameRepository;
         readonly IEfMediaRepository _mediaRepository;
-        readonly NET.IHttpContextAccessor HttpContextAccessor;
         readonly IMapper _mapper;
 
-        public GameService(IEfGameRepository gameRepository, IMapper mapper, NET.IHttpContextAccessor httpContextAccessor, IEfMediaRepository mediaRepository)
+        public GameService(IEfGameRepository gameRepository, IMapper mapper, IEfMediaRepository mediaRepository)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
-            HttpContextAccessor = httpContextAccessor;
             _mediaRepository = mediaRepository;
         }
 
@@ -76,9 +77,21 @@ namespace Business.Services.Concrete
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameCoverImage);
             if (coverImage != null)
-                mappedEntity.CoverImage = new MA.File { Url = coverImage.Url, Name = coverImage.Name };
+                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
 
             return new SuccessDataResult<SingleGameResponse>(mappedEntity);
+        }
+
+        public async Task<IDataResult<GetGameImagesResponse>> GetImagesAsync(Guid id)
+        {
+            var images = await _mediaRepository.GetListAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameImage);
+
+            var result = new GetGameImagesResponse
+            {
+                Images = _mapper.Map<List<GetMediaModel>>(images)
+            };
+
+            return new SuccessDataResult<GetGameImagesResponse>(result);
         }
 
         public async Task<IResult> UpdateAsync(UpdateGameRequest updateGameRequest)
@@ -112,5 +125,28 @@ namespace Business.Services.Concrete
             return new SuccessResult();
         }
 
+        public async Task<IResult> UploadImagesAsync(UploadGameImagesRequest request)
+        {
+            var gameImages = await _mediaRepository.GetListAsync(f => f.EntityId == request.EntityId && f.TypeId == (int)MediaType.GameImage);
+            var matchesResult = BusinessHelper.GetMatchesList(gameImages.Select(s => s.Name), request.Images.Select(s => s.Name));
+
+            var removedImages = gameImages.Where(f => matchesResult.MisMatchesSource.Contains(f.Name));
+            var newImages = matchesResult.MisMatchesCluster.Select(s => new Media
+            {
+                TypeId = (int)MediaType.GameImage,
+                EntityId = request.EntityId,
+                Url = request.Images.Single(f => f.Name == s).Url,
+                Name = s
+            });
+
+            if (removedImages.Any()) await _mediaRepository.DeleteRangeAsync(removedImages);
+            if (newImages.Any()) await _mediaRepository.AddRangeAsync(newImages);
+
+            if (newImages.Any() || removedImages.Any())
+                await _mediaRepository.SaveAsync();
+
+
+            return new SuccessResult();
+        }
     }
 }

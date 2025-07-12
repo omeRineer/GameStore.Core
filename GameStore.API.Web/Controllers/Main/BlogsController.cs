@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
-using MA = Core.Entities.DTO.File;
 using Core.Utilities.Filters;
 using MeArch.Module.Security.Filters;
 using Models.Blog;

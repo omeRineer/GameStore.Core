@@ -1,6 +1,16 @@
-version: '3.9'
-
 services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: gamestore.rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=gamestore
+      - RABBITMQ_DEFAULT_PASS=gamestore
+    networks:
+      - appnet
+
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: gamestore.db.sql
@@ -11,6 +21,8 @@ services:
       ACCEPT_EULA: "Y"
     networks:
       - appnet
+    volumes:
+      - sql_data:/var/opt/mssql
 
   webapi:
     build:
@@ -24,6 +36,7 @@ services:
       ASPNETCORE_URLS: "http://*:1453"
     depends_on:
       - db
+      - rabbitmq
     networks:
       - appnet
 
@@ -39,9 +52,13 @@ services:
       ASPNETCORE_URLS: "http://*:1400"
     depends_on:
       - db
+      - rabbitmq
     networks:
       - appnet
 
 networks:
   appnet:
     driver: bridge
+
+volumes:
+  sql_data:

@@ -17,13 +17,11 @@ namespace MeArch.Module.Security.Filters
         public Authorize(string claims = null)
         {
             if (claims != null)
-            {
                 Claims = new string[]
                 {
                     "SuperAdmin"
                 }
                 .Concat(claims.Split(',')).ToArray();
-            }
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)

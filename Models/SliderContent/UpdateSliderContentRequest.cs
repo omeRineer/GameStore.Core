@@ -1,5 +1,5 @@
-﻿using DTO = Core.Entities.DTO.File;
-using System;
+﻿using System;
+using Models.Media;
 
 namespace Models.SliderContent
 {
@@ -11,7 +11,7 @@ namespace Models.SliderContent
         public string? To { get; set; }
         public bool IsActive { get; set; }
         public int Priority { get; set; }
-        public DTO.File? CoverImage { get; set; }
+        public PostMediaModel? CoverImage { get; set; }
     }
 
 }

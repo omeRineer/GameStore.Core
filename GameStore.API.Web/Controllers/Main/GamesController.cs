@@ -51,5 +51,23 @@ namespace GameStore.API.Web.Controllers.Main
 
             return Result(result);
         }
+
+        [HttpPost("UploadImages")]
+        [Authorize("SuperAdmin,API.Web.Games.UploadImages")]
+        public async Task<IActionResult> UploadImagesAsync(UploadGameImagesRequest request)
+        {
+            var result = await _gameService.UploadImagesAsync(request);
+
+            return Result(result);
+        }
+
+        [HttpGet("GetImages/{id}")]
+        [Authorize("SuperAdmin,API.Web.Games.GetImages")]
+        public async Task<IActionResult> GetImagesAsync([FromRoute] Guid id)
+        {
+            var result = await _gameService.GetImagesAsync(id);
+
+            return Result(result);
+        }
     }
 }

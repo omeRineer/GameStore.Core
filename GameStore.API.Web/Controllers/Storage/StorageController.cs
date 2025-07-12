@@ -15,11 +15,11 @@ namespace GameStore.API.Web.Controllers.Storage
             this.imageKitStorageService = imageKitStorageService;
         }
 
-        [HttpGet("GetFiles/{fileType}")]
+        [HttpGet("GetFiles/{tags?}")]
         [Authorize("API.Web.Storage")]
-        public async Task<IActionResult> GetFilesAsync([FromRoute] string? tag)
+        public async Task<IActionResult> GetFilesAsync([FromRoute] string? tags)
         {
-            var result = await imageKitStorageService.GetListAsync(tag);
+            var result = await imageKitStorageService.GetListAsync(tags);
 
             return Result(result);
         }

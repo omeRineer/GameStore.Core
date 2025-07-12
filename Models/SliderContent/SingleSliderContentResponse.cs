@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Models.Media;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO = Core.Entities.DTO.File;
 
 namespace Models.SliderContent
 {
@@ -14,7 +14,7 @@ namespace Models.SliderContent
         public string? To { get; set; }
         public int Priority { get; set; }
         public bool IsActive { get; set; }
-        public DTO.File? CoverImage { get; set; }
+        public GetMediaModel? CoverImage { get; set; }
 
         public SingleSliderContent_Type SliderType { get; set; }
     }
