@@ -20,7 +20,16 @@ namespace Business.ServiceModules
             connectionFactory.UserName = CoreConfiguration.RabbitMqOptions.UserName;
             connectionFactory.Password = CoreConfiguration.RabbitMqOptions.Password;
 
-            var connection = await connectionFactory.CreateConnectionAsync();
+            IConnection? connection = null;
+            for (int i = 0; i < 50; i++)
+            {
+                await Task.Delay(1000);
+                connection = await connectionFactory.CreateConnectionAsync();
+
+                if (connection!= null && connection.IsOpen)
+                    break;
+            }
+
             var channel = await connection.CreateChannelAsync();
 
             services.AddSingleton<IConnection>(connection);
