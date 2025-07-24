@@ -41,7 +41,7 @@ services:
       - "1453:1453"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ASPNETCORE_URLS: "http://*:1453;https://*:1071"
+      ASPNETCORE_URLS: "http://*:1453"
     depends_on:
       - db
       - rabbitmq
@@ -55,7 +55,7 @@ services:
       - "1071:1400"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ASPNETCORE_URLS: "http://*:1400;https://*:1401"
+      ASPNETCORE_URLS: "http://*:1400"
     depends_on:
       - db
       - rabbitmq
