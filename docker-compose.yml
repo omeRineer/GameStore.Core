@@ -35,15 +35,13 @@ services:
       - mongo_data:/data/db
 
   webapi:
-    build:
-      context: .
-      dockerfile: dockerfile-webapi
+    image: developergeralt/gamestore.api.web
     container_name: gamestore.api.web
     ports:
       - "1453:1453"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ASPNETCORE_URLS: "http://*:1453"
+      ASPNETCORE_URLS: "http://*:1453;https://*:1071"
     depends_on:
       - db
       - rabbitmq
@@ -51,15 +49,13 @@ services:
       - appnet
 
   odataapi:
-    build:
-      context: .
-      dockerfile: dockerfile-odatapi
+    image: developergeralt/gamestore.api.odata
     container_name: gamestore.api.odata
     ports:
       - "1071:1400"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ASPNETCORE_URLS: "http://*:1400"
+      ASPNETCORE_URLS: "http://*:1400;https://*:1401"
     depends_on:
       - db
       - rabbitmq
@@ -68,10 +64,8 @@ services:
 
   
   metaapi:
-    build: 
-      context: ../Meta
-      dockerfile: dockerfile-metaapi
-    container_name: gamestore.api.metaapi
+    image: developergeralt/gamestore.api.meta
+    container_name: gamestore.api.meta
     ports:
       - "2016:2016"
     environment:
