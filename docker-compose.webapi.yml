@@ -1,0 +1,19 @@
+services:
+
+  webapi:
+    image: developergeralt/gamestore.api.web
+    container_name: gamestore.api.web
+    ports:
+      - "1453:1453"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://*:1453;https://*:1071"
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    external: true

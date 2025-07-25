@@ -1,0 +1,19 @@
+services:
+  
+  odataapi:
+    image: developergeralt/gamestore.api.odata
+    container_name: gamestore.api.odata
+    ports:
+      - "1071:1400"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://*:1400;https://*:1401"
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    external: true

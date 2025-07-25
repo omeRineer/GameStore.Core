@@ -1,0 +1,16 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: gamestore.rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=gamestore
+      - RABBITMQ_DEFAULT_PASS=gamestore
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    external: true
