@@ -17,4 +17,4 @@ networks:
     external: true
 
 volumes:
-  mongo_data:
+  sql_data:
