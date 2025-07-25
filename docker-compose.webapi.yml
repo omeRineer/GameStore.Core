@@ -7,7 +7,7 @@ services:
       - "1453:1453"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ASPNETCORE_URLS: "http://*:1453;https://*:1071"
+      ASPNETCORE_URLS: "http://*:1453"
     networks:
       - appnet
 
