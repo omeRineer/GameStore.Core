@@ -8,9 +8,6 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_URLS: "http://*:1400;https://*:1401"
-    depends_on:
-      - db
-      - rabbitmq
     networks:
       - appnet
 
