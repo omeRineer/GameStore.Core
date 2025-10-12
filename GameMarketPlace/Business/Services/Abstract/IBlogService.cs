@@ -10,7 +10,7 @@ namespace Business.Services.Abstract
 {
     public interface IBlogService
     {
-        Task<IDataResult<SingleBlogResponse>> GetAsync(Guid id);
+        Task<IDataResult<BlogResponse>> GetAsync(Guid id);
         Task<IResult> CreateAsync(CreateBlogRequest createBlogRequest);
         Task<IResult> UpdateAsync(UpdateBlogRequest updateBlogRequest);
         Task<IResult> DeleteAsync(Guid id);

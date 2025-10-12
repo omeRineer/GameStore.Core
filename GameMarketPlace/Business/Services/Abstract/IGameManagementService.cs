@@ -8,9 +8,9 @@ using Models.Game;
 
 namespace Business.Services.Abstract
 {
-    public interface IGameService
+    public interface IGameManagementService
     {
-        Task<IDataResult<SingleGameResponse>> GetAsync(Guid id);
+        Task<IDataResult<GameResponse>> GetAsync(Guid id);
         Task<IResult> CreateAsync(CreateGameRequest request);
         Task<IResult> UpdateAsync(UpdateGameRequest updateGameRequest);
         Task<IResult> DeleteAsync(Guid id);

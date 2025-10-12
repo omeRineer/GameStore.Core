@@ -17,7 +17,6 @@ namespace DataAccess.ServiceModules
         public void Load(IServiceCollection services)
         {
             services.AddScoped<IEfCategoryRepository, EfCategoryRepository>();
-            services.AddScoped<IEfCategoryRepository, EfCategoryRepository>();
             services.AddScoped<IEfGameRepository, EfGameRepository>();
             services.AddScoped<IEfSliderContentRepository, EfSliderContentRepository>();
             services.AddScoped<IEfBlogRepository, EfBlogRepository>();

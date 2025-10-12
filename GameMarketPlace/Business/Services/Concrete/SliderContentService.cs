@@ -67,17 +67,17 @@ namespace Business.Services.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleSliderContentResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<SliderContentResponse>> GetAsync(Guid id)
         {
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == id, includes: i => i.Include(x => x.SliderType));
-            var mappedEntity = _mapper.Map<SingleSliderContentResponse>(entity);
+            var mappedEntity = _mapper.Map<SliderContentResponse>(entity);
             var mediaType = BusinessHelper.GetMediaTypeBySliderType(entity);
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)mediaType);
             if (coverImage != null)
-                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
+                mappedEntity.CoverImage = _mapper.Map<MediaResponse>(coverImage);
 
-            return new SuccessDataResult<SingleSliderContentResponse>(mappedEntity);
+            return new SuccessDataResult<SliderContentResponse>(mappedEntity);
         }
 
         public async Task<IDataResult<List<SliderContent>>> GetListAsync()

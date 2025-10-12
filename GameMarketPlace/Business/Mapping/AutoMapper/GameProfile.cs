@@ -16,7 +16,7 @@ namespace Business.Mapping.AutoMapper
             #region Rest
             CreateMap<CreateGameRequest, Game>();
             CreateMap<UpdateGameRequest, Game>();
-            CreateMap<Game, SingleGameResponse>();
+            CreateMap<Game, GameResponse>();
             #endregion
         }
     }

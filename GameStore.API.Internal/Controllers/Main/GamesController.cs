@@ -9,9 +9,9 @@ namespace GameStore.API.Web.Controllers.Main
 {
     public class GamesController : BaseController
     {
-        IGameService _gameService;
+        IGameManagementService _gameService;
 
-        public GamesController(IGameService gameService)
+        public GamesController(IGameManagementService gameService)
         {
             _gameService = gameService;
         }

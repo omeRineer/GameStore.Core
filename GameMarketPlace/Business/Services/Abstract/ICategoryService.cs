@@ -11,7 +11,7 @@ namespace Business.Services.Abstract
 {
     public interface ICategoryService
     {
-        Task<IDataResult<SingleCategoryResponse>> GetAsync(Guid id);
+        Task<IDataResult<CategoryResponse>> GetAsync(Guid id);
         Task<IResult> CreateAsync(CreateCategoryRequest request);
         Task<IResult> UpdateAsync(UpdateCategoryRequest updateCategoryRequest);
         Task<IResult> DeleteAsync(Guid id);

@@ -10,8 +10,7 @@ namespace Business.Mapping.AutoMapper
         public CategoryProfile()
         {
             #region Rest
-            CreateMap<Category, SingleCategoryResponse>().ReverseMap();
-            CreateMap<Category, SingleGame_Category>().ReverseMap();
+            CreateMap<Category, CategoryResponse>().ReverseMap();
             CreateMap<CreateCategoryRequest, Category>().ReverseMap();
             CreateMap<UpdateCategoryRequest, Category>().ReverseMap();
             #endregion

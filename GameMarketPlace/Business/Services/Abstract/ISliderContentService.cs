@@ -11,7 +11,7 @@ namespace Business.Services.Abstract
 {
     public interface ISliderContentService
     {
-        Task<IDataResult<SingleSliderContentResponse>> GetAsync(Guid id);
+        Task<IDataResult<SliderContentResponse>> GetAsync(Guid id);
         Task<IDataResult<List<SliderContent>>> GetListAsync();
         Task<IResult> CreateAsync(CreateSliderContentRequest request);
         Task<IResult> UpdateAsync(UpdateSliderContentRequest request);

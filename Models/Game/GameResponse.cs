@@ -1,4 +1,5 @@
-﻿using Models.Media;
+﻿using Models.Category;
+using Models.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models.Game
 {
-    public class SingleGameResponse
+    public class GameResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -15,15 +16,8 @@ namespace Models.Game
         public string? Content { get; set; }
         public decimal Price { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public GetMediaModel? CoverImage { get; set; }
+        public MediaResponse? CoverImage { get; set; }
 
-
-        public SingleGame_Category Category { get; set; }
-    }
-
-    public class SingleGame_Category
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public CategoryResponse Category { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Business.Mapping.AutoMapper
         {
             #region Rest
             CreateMap<CreateSliderContentRequest, SliderContent>().ReverseMap();
-            CreateMap<SliderContent, SingleSliderContentResponse>().ReverseMap();
+            CreateMap<SliderContent, SliderContentResponse>().ReverseMap();
             CreateMap<UpdateSliderContentRequest, SliderContent>().ReverseMap();
             #endregion
         }

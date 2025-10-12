@@ -22,7 +22,7 @@ using Models.Media;
 
 namespace Business.Services.Concrete
 {
-    public class GameService : IGameService
+    public class GameService : IGameManagementService
     {
         readonly IEfGameRepository _gameRepository;
         readonly IEfMediaRepository _mediaRepository;
@@ -70,16 +70,16 @@ namespace Business.Services.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleGameResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<GameResponse>> GetAsync(Guid id)
         {
             var entity = await _gameRepository.GetSingleAsync(f => f.Id == id, i => i.Include(x => x.Category));
-            var mappedEntity = _mapper.Map<SingleGameResponse>(entity);
+            var mappedEntity = _mapper.Map<GameResponse>(entity);
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameCoverImage);
             if (coverImage != null)
-                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
+                mappedEntity.CoverImage = _mapper.Map<MediaResponse>(coverImage);
 
-            return new SuccessDataResult<SingleGameResponse>(mappedEntity);
+            return new SuccessDataResult<GameResponse>(mappedEntity);
         }
 
         public async Task<IDataResult<GetGameImagesResponse>> GetImagesAsync(Guid id)
@@ -88,7 +88,7 @@ namespace Business.Services.Concrete
 
             var result = new GetGameImagesResponse
             {
-                Images = _mapper.Map<List<GetMediaModel>>(images)
+                Images = _mapper.Map<List<MediaResponse>>(images)
             };
 
             return new SuccessDataResult<GetGameImagesResponse>(result);

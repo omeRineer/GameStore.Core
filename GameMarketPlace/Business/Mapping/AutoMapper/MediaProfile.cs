@@ -13,7 +13,7 @@ namespace Business.Mapping.AutoMapper
     {
         public MediaProfile()
         {
-            CreateMap<Media, GetMediaModel>();
+            CreateMap<Media, MediaResponse>();
             CreateMap<PostMediaModel, Media>();
         }
     }

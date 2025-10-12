@@ -63,16 +63,16 @@ namespace Business.Services.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleBlogResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<BlogResponse>> GetAsync(Guid id)
         {
             var entity = await _blogRepository.GetSingleAsync(f => f.Id == id);
-            var mappedEntity = _mapper.Map<SingleBlogResponse>(entity);
+            var mappedEntity = _mapper.Map<BlogResponse>(entity);
 
             var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.BlogCoverImage);
             if (coverImage != null)
-                mappedEntity.CoverImage = _mapper.Map<GetMediaModel>(coverImage);
+                mappedEntity.CoverImage = _mapper.Map<MediaResponse>(coverImage);
 
-            return new SuccessDataResult<SingleBlogResponse>(mappedEntity);
+            return new SuccessDataResult<BlogResponse>(mappedEntity);
         }
 
         public async Task<IResult> UpdateAsync(UpdateBlogRequest updateBlogRequest)

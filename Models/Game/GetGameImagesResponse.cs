@@ -9,6 +9,6 @@ namespace Models.Game
 {
     public class GetGameImagesResponse
     {
-        public List<GetMediaModel>? Images { get; set; }
+        public List<MediaResponse>? Images { get; set; }
     }
 }

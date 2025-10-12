@@ -16,7 +16,7 @@ namespace Business.Mapping.AutoMapper
             #region Rest
             CreateMap<CreateBlogRequest, Blog>();
             CreateMap<UpdateBlogRequest, Blog>();
-            CreateMap<Blog, SingleBlogResponse>();
+            CreateMap<Blog, BlogResponse>();
             #endregion
         }
     }

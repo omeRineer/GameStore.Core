@@ -30,23 +30,23 @@ namespace Business.ServiceModules
     {
         public void Load(IServiceCollection services)
         {
-            services.AddSingleton<RabbitMqClientService>();
-            services.AddSingleton<NotificationService>();
+            //services.AddSingleton<RabbitMqClientService>();
+            //services.AddSingleton<NotificationService>();
 
-            services.AddProxiedScoped<ICategoryService, CategoryService>();
-            services.AddProxiedScoped<IBlogService, BlogService>();
-            services.AddProxiedScoped<IGameService, GameService>();
-            services.AddProxiedScoped<IMenuService, MenuService>();
-            services.AddProxiedScoped<ISliderContentService, SliderContentService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IGameManagementService, GameService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<ISliderContentService, SliderContentService>();
             services.AddScoped<ImageKitStorageService>();
 
-            services.AddProxiedScoped<IAuthService, AuthService>();
-            services.AddProxiedScoped<IProfileService, ProfileService>();
-            services.AddProxiedScoped<IUserService, UserService>();
-            services.AddProxiedScoped<IRoleService, RoleService>();
-            services.AddProxiedScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IPermissionService, PermissionService>();
 
-            services.AddProxiedScoped<ILookupService, LookupService>();
+            services.AddScoped<ILookupService, LookupService>();
         }
     }
 }
