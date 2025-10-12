@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.API.OData", "GameStore.API.OData\GameStore.API.OData.csproj", "{7505423C-91C2-4988-9473-DD1E5C1AACF0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.API.Web", "GameStore.API.Web\GameStore.API.Web.csproj", "{02CB8B26-558D-496D-B585-93019A7B0973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.API.Internal", "GameStore.API.Internal\GameStore.API.Internal.csproj", "{02CB8B26-558D-496D-B585-93019A7B0973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{2B6D04A6-E0EA-40F0-BAA9-730B59760FCA}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{7F2DEFB4-5B3E-4207-AD0C-5F6A46904326}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{92839D28-5E9F-4F16-BC81-0606476AA32A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.API.Web", "GameStore.API.Web\GameStore.API.Web.csproj", "{73BC78F4-1826-488B-8F81-30BAE8F67DA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{0655E673-5378-4A6F-AA18-18DCAB6842E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0655E673-5378-4A6F-AA18-18DCAB6842E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0655E673-5378-4A6F-AA18-18DCAB6842E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73BC78F4-1826-488B-8F81-30BAE8F67DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BC78F4-1826-488B-8F81-30BAE8F67DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BC78F4-1826-488B-8F81-30BAE8F67DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BC78F4-1826-488B-8F81-30BAE8F67DA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{7505423C-91C2-4988-9473-DD1E5C1AACF0} = {7F2DEFB4-5B3E-4207-AD0C-5F6A46904326}
 		{02CB8B26-558D-496D-B585-93019A7B0973} = {7F2DEFB4-5B3E-4207-AD0C-5F6A46904326}
 		{0655E673-5378-4A6F-AA18-18DCAB6842E2} = {92839D28-5E9F-4F16-BC81-0606476AA32A}
+		{73BC78F4-1826-488B-8F81-30BAE8F67DA6} = {7F2DEFB4-5B3E-4207-AD0C-5F6A46904326}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A51AEC21-5692-4548-AB8F-FA601B7436E5}

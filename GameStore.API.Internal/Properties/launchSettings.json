@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GameStore.API.OData": {
+    "GameStore.API.Internal": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Local"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7227;http://localhost:5045"
+      "applicationUrl": "https://localhost:7184;http://localhost:5217"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -34,8 +34,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:34647",
-      "sslPort": 44312
+      "applicationUrl": "http://localhost:31190",
+      "sslPort": 44395
     }
   }
 }

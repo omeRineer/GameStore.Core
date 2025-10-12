@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.OData.Results;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
-using GameStore.API.OData.Filters;
 
 namespace GameStore.API.OData.Controllers.Base
 {

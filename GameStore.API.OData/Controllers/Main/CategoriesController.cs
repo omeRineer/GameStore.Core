@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.EntityFrameworkCore;
 using GameStore.API.OData.Controllers.Base;
-using GameStore.API.OData.Filters;
 
 namespace GameStore.API.OData.Controllers.Main
 {
