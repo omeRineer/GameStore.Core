@@ -15,21 +15,18 @@ using Entities.Enum.Type;
 using Business.Helpers;
 using Models.SliderContent;
 using Models.Blog;
-using Models.Media;
 
 namespace Business.Services.Concrete
 {
     public class SliderContentService : ISliderContentService
     {
         readonly IEfSliderContentRepository _sliderContentRepository;
-        readonly IEfMediaRepository _mediaRepository;
         readonly IMapper _mapper;
 
-        public SliderContentService(IEfSliderContentRepository sliderContentRepository, IMapper mapper, IEfMediaRepository mediaRepository)
+        public SliderContentService(IEfSliderContentRepository sliderContentRepository, IMapper mapper)
         {
             _sliderContentRepository = sliderContentRepository;
             _mapper = mapper;
-            _mediaRepository = mediaRepository;
         }
 
         public async Task<IResult> CreateAsync(CreateSliderContentRequest request)
@@ -38,18 +35,6 @@ namespace Business.Services.Concrete
             entity.GenerateId();
 
             await _sliderContentRepository.AddAsync(entity);
-            if (request.CoverImage != null)
-            {
-                var coverImage = new Media
-                {
-                    Name = request.CoverImage.Name,
-                    EntityId = entity.Id,
-                    Url = request.CoverImage.Url,
-                    TypeId = (int)BusinessHelper.GetMediaTypeBySliderType(entity)
-                };
-
-                await _mediaRepository.AddAsync(coverImage);
-            }
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();
@@ -58,10 +43,8 @@ namespace Business.Services.Concrete
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == id);
-            var mediaList = await _mediaRepository.GetListAsync(f => f.EntityId == id);
 
             await _sliderContentRepository.DeleteAsync(entity);
-            await _mediaRepository.DeleteRangeAsync(mediaList);
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();
@@ -71,11 +54,6 @@ namespace Business.Services.Concrete
         {
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == id, includes: i => i.Include(x => x.SliderType));
             var mappedEntity = _mapper.Map<SliderContentResponse>(entity);
-            var mediaType = BusinessHelper.GetMediaTypeBySliderType(entity);
-
-            var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)mediaType);
-            if (coverImage != null)
-                mappedEntity.CoverImage = _mapper.Map<MediaResponse>(coverImage);
 
             return new SuccessDataResult<SliderContentResponse>(mappedEntity);
         }
@@ -91,29 +69,8 @@ namespace Business.Services.Concrete
         {
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == request.Id);
             var mappedEntity = _mapper.Map(request, entity);
-            var mediaType = BusinessHelper.GetMediaTypeBySliderType(mappedEntity);
 
             await _sliderContentRepository.UpdateAsync(entity);
-            if (request.CoverImage != null)
-            {
-                var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == entity.Id && f.TypeId == (int)mediaType);
-
-                // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
-                if (coverImage != null)
-                {
-                    coverImage.Name = request.CoverImage.Name;
-                    coverImage.Url = request.CoverImage.Url;
-                    await _mediaRepository.UpdateAsync(coverImage);
-                }
-                else
-                    await _mediaRepository.AddAsync(new Media
-                    {
-                        TypeId = (int)mediaType,
-                        Name = request.CoverImage.Name,
-                        EntityId = entity.Id,
-                        Url = request.CoverImage.Url,
-                    });
-            }
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();

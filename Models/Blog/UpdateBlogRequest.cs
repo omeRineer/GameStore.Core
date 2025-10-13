@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Media;
 
 namespace Models.Blog
 {
@@ -9,6 +8,6 @@ namespace Models.Blog
         public string Header { get; set; }
         public string Content { get; set; }
         public bool? Status { get; set; }
-        public PostMediaModel? CoverImage { get; set; }
+        public string? CoverImage { get; set; }
     }
 }

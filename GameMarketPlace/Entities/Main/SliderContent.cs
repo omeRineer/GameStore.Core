@@ -15,6 +15,7 @@ namespace Entities.Main
         public string? To { get; set; }
         public int Priority { get; set; }
         public bool IsActive { get; set; }
+        public string CoverImage { get; set; }
 
         public TypeLookup SliderType { get; set; }
     }

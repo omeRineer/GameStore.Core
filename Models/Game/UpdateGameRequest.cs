@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Media;
 
 namespace Models.Game
 {
@@ -14,6 +13,6 @@ namespace Models.Game
         public string? Content { get; set; }
         public decimal Price { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public PostMediaModel? CoverImage { get; set; }
+        public string? CoverImage { get; set; }
     }
 }

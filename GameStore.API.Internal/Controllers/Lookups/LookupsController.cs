@@ -34,9 +34,5 @@ namespace GameStore.API.Web.Controllers.Lookups
         [HttpGet("SliderTypes")]
         public async Task<IActionResult> GetSliderTypes()
             => Result(await _lookupService.GetTypesAsync((int) ProcessGroupEnum.SliderType));
-
-        [HttpGet("MediaTypes")]
-        public async Task<IActionResult> GetMediaTypes()
-            => Result(await _lookupService.GetTypesAsync((int)ProcessGroupEnum.MediaType));
     }
 }

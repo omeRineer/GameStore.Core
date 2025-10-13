@@ -11,7 +11,7 @@ namespace Business.Services.Abstract.Identity
 {
     public interface IProfileService
     {
-        Task<IDataResult<GetProfileResponse>> GetAsync();
+        Task<IDataResult<ProfileResponse>> GetAsync();
         Task<IResult> UpdateAsync(UpdateProfileRequest request);
     }
 }

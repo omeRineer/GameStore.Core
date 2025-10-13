@@ -43,16 +43,16 @@ namespace Business.Services.Concrete.Identity
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SinglePermissionResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<PermissionResponse>> GetAsync(Guid id)
         {
             var permission = await _permissionRepository.GetSingleOrDefaultAsync(f => f.Id == id);
 
             if (permission == null)
-                return new ErrorDataResult<SinglePermissionResponse>("İzin bilgisi bulunamadı");
+                return new ErrorDataResult<PermissionResponse>("İzin bilgisi bulunamadı");
 
-            var result = _mapper.Map<SinglePermissionResponse>(permission);
+            var result = _mapper.Map<PermissionResponse>(permission);
 
-            return new SuccessDataResult<SinglePermissionResponse>(result);
+            return new SuccessDataResult<PermissionResponse>(result);
         }
 
         public async Task<IDataResult<GetPermissionsResponse>> GetListAsync()
@@ -61,7 +61,7 @@ namespace Business.Services.Concrete.Identity
 
             var result = new GetPermissionsResponse
             {
-                Permissions = permissions.Select(s => new GetPermissions_Item
+                Permissions = permissions.Select(s => new PermissionResponse
                 {
                     Id = s.Id,
                     Name = s.Name,

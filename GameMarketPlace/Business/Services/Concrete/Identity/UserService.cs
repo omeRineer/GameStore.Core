@@ -72,16 +72,16 @@ namespace Business.Services.Concrete.Identity
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleUserResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<UserResponse>> GetAsync(Guid id)
         {
             var user = await _userRepository.GetSingleOrDefaultAsync(f => f.Id == id);
 
             if (user == null)
-                return new ErrorDataResult<SingleUserResponse>("Kullanıcı bulunamadı");
+                return new ErrorDataResult<UserResponse>("Kullanıcı bulunamadı");
 
-            var result = _mapper.Map<SingleUserResponse>(user);
+            var result = _mapper.Map<UserResponse>(user);
 
-            return new SuccessDataResult<SingleUserResponse>(result);
+            return new SuccessDataResult<UserResponse>(result);
         }
 
         public async Task<IDataResult<GetUserClaimsResponse>> GetClaimsAsync(Guid id)

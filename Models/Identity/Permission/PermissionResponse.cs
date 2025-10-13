@@ -1,6 +1,6 @@
 ﻿namespace Models.Identity.Permission
 {
-    public class SinglePermissionResponse
+    public class PermissionResponse
     {
         public Guid Id { get; set; }
         public string Key { get; set; }

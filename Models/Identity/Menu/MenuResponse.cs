@@ -1,6 +1,6 @@
 ﻿namespace Models.Identity.Menu
 {
-    public class SingleMenuResponse
+    public class MenuResponse
     {
         public Guid Id { get; set; }
         public Guid? ParentMenuId { get; set; }

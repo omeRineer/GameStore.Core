@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Identity.Profile
+namespace Models.Identity.User
 {
-    public class GetProfileResponse
+    public class UserResponse
     {
+        public Guid Id { get; set; }
         public string Key { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

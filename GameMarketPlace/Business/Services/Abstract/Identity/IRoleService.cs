@@ -8,7 +8,7 @@ namespace Business.Services.Abstract.Identity
 {
     public interface IRoleService
     {
-        Task<IDataResult<SingleRoleResponse>> GetAsync(Guid id);
+        Task<IDataResult<RoleResponse>> GetAsync(Guid id);
         Task<IDataResult<GetRolesResponse>> GetListAsync();
         Task<IResult> CreateAsync(CreateRoleRequest request);
         Task<IResult> UpdateAsync(UpdateRoleRequest request);

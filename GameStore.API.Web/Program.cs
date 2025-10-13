@@ -13,7 +13,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 builder.Services.AddServiceModules(new IServiceModule[]
 {
-    new BusinessServiceModule(),
     new RepositoryServiceModule(),
     new MeArchitectureServiceModule(),
     new WebModule()

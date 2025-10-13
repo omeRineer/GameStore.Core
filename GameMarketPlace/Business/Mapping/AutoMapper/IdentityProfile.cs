@@ -22,30 +22,30 @@ namespace Business.Mapping.AutoMapper
             #region User
             CreateMap<CreateUserRequest, User>();
             CreateMap<UpdateUserRequest, User>();
-            CreateMap<User, SingleUserResponse>();
+            CreateMap<User, UserResponse>();
             #endregion
 
             #region Profile
-            CreateMap<User, GetProfileResponse>();
+            CreateMap<User, ProfileResponse>();
             CreateMap<UpdateProfileRequest, User>();
             #endregion
 
             #region Role
             CreateMap<CreateRoleRequest, Role>();
             CreateMap<UpdateRoleRequest, Role>();
-            CreateMap<Role, SingleRoleResponse>();
+            CreateMap<Role, RoleResponse>();
             #endregion
 
             #region Permission
             CreateMap<CreatePermissionRequest, Permission>();
             CreateMap<UpdatePermissionRequest, Permission>();
-            CreateMap<Permission, SinglePermissionResponse>();
+            CreateMap<Permission, PermissionResponse>();
             #endregion
 
             #region Menu
             CreateMap<CreateMenuRequest, Menu>();
             CreateMap<UpdateMenuRequest, Menu>();
-            CreateMap<Menu, SingleMenuResponse>();
+            CreateMap<Menu, MenuResponse>();
             #endregion
         }
     }

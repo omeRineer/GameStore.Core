@@ -14,7 +14,7 @@ namespace Business.Services.Abstract
     {
         Task<IDataResult<GetMenusResponse>> GetListAsync();
         Task<IDataResult<GetMenusResponse>> GetSessionMenusAsync();
-        Task<IDataResult<SingleMenuResponse>> GetAsync(Guid id);
+        Task<IDataResult<MenuResponse>> GetAsync(Guid id);
         Task<IResult> CreateAsync(CreateMenuRequest request);
         Task<IResult> UpdateAsync(UpdateMenuRequest request);
         Task<IResult> DeleteAsync(Guid id);

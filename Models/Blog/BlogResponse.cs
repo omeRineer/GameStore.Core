@@ -1,5 +1,4 @@
-﻿using Models.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +13,6 @@ namespace Models.Blog
         public string Content { get; set; }
         public int ReaderCount { get; set; }
         public bool Status { get; set; }
-        public MediaResponse CoverImage { get; set; }
+        public string? CoverImage { get; set; }
     }
 }

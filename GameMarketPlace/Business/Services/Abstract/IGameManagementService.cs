@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Models.Game;
+using Models.GameImage;
+using Models.Common;
 
 
 namespace Business.Services.Abstract
@@ -15,6 +17,6 @@ namespace Business.Services.Abstract
         Task<IResult> UpdateAsync(UpdateGameRequest updateGameRequest);
         Task<IResult> DeleteAsync(Guid id);
         Task<IResult> UploadImagesAsync(UploadGameImagesRequest request);
-        Task<IDataResult<GetGameImagesResponse>> GetImagesAsync(Guid id);
+        Task<IDataResult<ListResponse<GameImageResponse>>> GetImagesAsync(Guid id);
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Concrete.EntityFramework.EntityConfigurations
 {
-    public class MediaEntityConfiguration : IEntityTypeConfiguration<Media>
+    public class GameImageEntityConfiguration : IEntityTypeConfiguration<GameImage>
     {
-        public void Configure(EntityTypeBuilder<Media> builder)
+        public void Configure(EntityTypeBuilder<GameImage> builder)
         {
-            builder.ToTable("Medias");
+            builder.ToTable("GameImages");
 
             builder
                 .HasKey(x => x.Id);

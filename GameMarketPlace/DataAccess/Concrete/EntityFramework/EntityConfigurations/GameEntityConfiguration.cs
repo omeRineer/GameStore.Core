@@ -12,6 +12,11 @@ namespace DataAccess.Concrete.EntityFramework.EntityConfigurations
 
             builder
                 .HasKey(x => x.Id);
+
+            builder
+                .HasMany(m => m.Images)
+                .WithOne(o => o.Game)
+                .HasForeignKey(fk => fk.GameId);
         }
     }
 }

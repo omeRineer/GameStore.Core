@@ -10,7 +10,7 @@ namespace Business.Services.Abstract.Identity
 {
     public interface IUserService
     {
-        Task<IDataResult<SingleUserResponse>> GetAsync(Guid id);
+        Task<IDataResult<UserResponse>> GetAsync(Guid id);
         Task<IResult> CreateAsync(CreateUserRequest request);
         Task<IResult> UpdateAsync(UpdateUserRequest request);
         Task<IResult> DeleteAsync(Guid id);

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Main;
-using Models.Media;
+using Models.GameImage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Business.Mapping.AutoMapper
 {
-    public class MediaProfile : Profile
+    public class GameImageProfile : Profile
     {
-        public MediaProfile()
+        protected GameImageProfile()
         {
-            CreateMap<Media, MediaResponse>();
-            CreateMap<PostMediaModel, Media>();
+            CreateMap<GameImage, GameImageResponse>();
         }
     }
 }

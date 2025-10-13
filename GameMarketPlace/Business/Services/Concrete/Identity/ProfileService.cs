@@ -25,13 +25,13 @@ namespace Business.Services.Concrete.Identity
             _userRepository = userRepository;
         }
 
-        public async Task<IDataResult<GetProfileResponse>> GetAsync()
+        public async Task<IDataResult<ProfileResponse>> GetAsync()
         {
             var user = await _userRepository.GetSingleAsync(f=> f.Id == CurrentUser.Id);
 
-            var result = _mapper.Map<GetProfileResponse>(user);
+            var result = _mapper.Map<ProfileResponse>(user);
 
-            return new SuccessDataResult<GetProfileResponse>(result);
+            return new SuccessDataResult<ProfileResponse>(result);
         }
 
         public async Task<IResult> UpdateAsync(UpdateProfileRequest request)

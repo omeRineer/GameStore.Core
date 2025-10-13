@@ -13,5 +13,6 @@ namespace Entities.Main
         public string Content { get; set; }
         public int ReaderCount { get; set; }
         public bool Status { get; set; }
+        public string? CoverImage { get; set; }
     }
 }

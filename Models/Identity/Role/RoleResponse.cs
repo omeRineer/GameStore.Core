@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Identity.Role
 {
-    public class SingleRoleResponse
+    public class RoleResponse
     {
         public Guid Id { get; set; }
         public string Key { get; set; }

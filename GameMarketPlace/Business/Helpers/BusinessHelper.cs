@@ -11,17 +11,6 @@ namespace Business.Helpers
 {
     public static class BusinessHelper
     {
-        public static MediaType GetMediaTypeBySliderType(SliderContent sliderContent)
-        {
-            MediaType mediaType = sliderContent.SliderTypeId switch
-            {
-                (int)SliderType.SliderItem => MediaType.SliderItemImage,
-                (int)SliderType.SliderSideItem => MediaType.SliderSideItemImage,
-                _ => MediaType.SliderItemImage
-            };
-
-            return mediaType;
-        }
         public static (IEnumerable<Type>? Matches, 
                        IEnumerable<Type>? MisMatchesSource,
                        IEnumerable<Type>? MisMatchesCluster) 

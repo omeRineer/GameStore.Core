@@ -24,21 +24,21 @@ namespace Business.Services.Concrete.Web
             Mapper = mapper;
         }
 
-        public async Task<IDataResult<GameResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<GameDetailResponse>> GetAsync(Guid id)
         {
-            var game = await _gameRepository.GetSingleOrDefaultAsync(f=> f.Id == id);
+            var game = await _gameRepository.GetSingleOrDefaultAsync(f => f.Id == id, includes: i => i.Include(x=> x.Category).Include(x => x.Images));
 
-            if(game == null) 
-                return new ErrorDataResult<GameResponse>("Game is not found.");
+            if (game == null)
+                return new ErrorDataResult<GameDetailResponse>("Game is not found.");
 
-            var result = Mapper.Map<GameResponse>(game);
+            var result = Mapper.Map<GameDetailResponse>(game);
 
-            return new SuccessDataResult<GameResponse>(result);
+            return new SuccessDataResult<GameDetailResponse>(result);
         }
 
         public async Task<IDataResult<ListResponse<GameResponse>>> GetListAsync()
         {
-            var data = await _gameRepository.GetListAsync(includes: i=> i.Include(x=> x.Category));
+            var data = await _gameRepository.GetListAsync(includes: i => i.Include(x => x.Category));
 
             var collection = Mapper.Map<List<GameResponse>>(data);
 

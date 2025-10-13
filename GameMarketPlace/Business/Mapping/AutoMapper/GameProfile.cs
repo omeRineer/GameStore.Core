@@ -17,6 +17,7 @@ namespace Business.Mapping.AutoMapper
             CreateMap<CreateGameRequest, Game>();
             CreateMap<UpdateGameRequest, Game>();
             CreateMap<Game, GameResponse>();
+            CreateMap<Game, GameDetailResponse>().IncludeBase<Game, GameResponse>();
             #endregion
         }
     }

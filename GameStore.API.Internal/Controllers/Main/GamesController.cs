@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
 using MeArch.Module.Security.Filters;
 using Models.Game;
+using Models.GameImage;
 
 namespace GameStore.API.Web.Controllers.Main
 {
@@ -17,7 +18,6 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("{id}")]
-        [Authorize("SuperAdmin,API.Web.Games.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _gameService.GetAsync(id);

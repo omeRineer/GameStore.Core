@@ -18,21 +18,22 @@ using Models.Blog;
 using Business.Helpers;
 using MeArch.Module.Security.Entities.Master;
 using DataAccess.Concrete.EntityFramework.General.Identity;
-using Models.Media;
+using Models.GameImage;
+using Models.Common;
 
 namespace Business.Services.Concrete
 {
     public class GameService : IGameManagementService
     {
         readonly IEfGameRepository _gameRepository;
-        readonly IEfMediaRepository _mediaRepository;
+        readonly IEfGameImageRepository _gameImageRepository;
         readonly IMapper _mapper;
 
-        public GameService(IEfGameRepository gameRepository, IMapper mapper, IEfMediaRepository mediaRepository)
+        public GameService(IEfGameRepository gameRepository, IMapper mapper, IEfGameImageRepository gameImageRepository)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
-            _mediaRepository = mediaRepository;
+            _gameImageRepository = gameImageRepository;
         }
 
         public async Task<IResult> CreateAsync(CreateGameRequest request)
@@ -41,18 +42,6 @@ namespace Business.Services.Concrete
             entity.GenerateId();
 
             await _gameRepository.AddAsync(entity);
-            if (request.CoverImage != null)
-            {
-                var coverImage = new Media
-                {
-                    Name = request.CoverImage.Name,
-                    EntityId = entity.Id,
-                    Url = request.CoverImage.Url,
-                    TypeId = (int)MediaType.GameCoverImage
-                };
-
-                await _mediaRepository.AddAsync(coverImage);
-            }
             await _gameRepository.SaveAsync();
 
             return new SuccessResult();
@@ -61,10 +50,8 @@ namespace Business.Services.Concrete
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = await _gameRepository.GetSingleAsync(f => f.Id == id);
-            var mediaList = await _mediaRepository.GetListAsync(f => f.EntityId == id);
 
             await _gameRepository.DeleteAsync(entity);
-            await _mediaRepository.DeleteRangeAsync(mediaList);
             await _gameRepository.SaveAsync();
 
             return new SuccessResult();
@@ -75,23 +62,18 @@ namespace Business.Services.Concrete
             var entity = await _gameRepository.GetSingleAsync(f => f.Id == id, i => i.Include(x => x.Category));
             var mappedEntity = _mapper.Map<GameResponse>(entity);
 
-            var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameCoverImage);
-            if (coverImage != null)
-                mappedEntity.CoverImage = _mapper.Map<MediaResponse>(coverImage);
-
             return new SuccessDataResult<GameResponse>(mappedEntity);
         }
 
-        public async Task<IDataResult<GetGameImagesResponse>> GetImagesAsync(Guid id)
+        public async Task<IDataResult<ListResponse<GameImageResponse>>> GetImagesAsync(Guid id)
         {
-            var images = await _mediaRepository.GetListAsync(f => f.EntityId == id && f.TypeId == (int)MediaType.GameImage);
+            var images = await _gameImageRepository.GetListAsync(f => f.GameId == id);
 
-            var result = new GetGameImagesResponse
-            {
-                Images = _mapper.Map<List<MediaResponse>>(images)
-            };
+            var mappedImages = _mapper.Map<List<GameImageResponse>>(images);
 
-            return new SuccessDataResult<GetGameImagesResponse>(result);
+            var result = new ListResponse<GameImageResponse>(mappedImages);
+
+            return new SuccessDataResult<ListResponse<GameImageResponse>>(result);
         }
 
         public async Task<IResult> UpdateAsync(UpdateGameRequest updateGameRequest)
@@ -100,26 +82,6 @@ namespace Business.Services.Concrete
             var mappedEntity = _mapper.Map(updateGameRequest, entity);
 
             await _gameRepository.UpdateAsync(entity);
-            if (updateGameRequest.CoverImage != null)
-            {
-                var coverImage = await _mediaRepository.GetSingleOrDefaultAsync(f => f.EntityId == entity.Id && f.TypeId == (int)MediaType.GameCoverImage);
-
-                // TODO Ömer : Burada resim dolu gelirse her seferinde güncelliyor. Versiyonlama yapılmalı
-                if (coverImage != null)
-                {
-                    coverImage.Name = updateGameRequest.CoverImage.Name;
-                    coverImage.Url = updateGameRequest.CoverImage.Url;
-                    await _mediaRepository.UpdateAsync(coverImage);
-                }
-                else
-                    await _mediaRepository.AddAsync(new Media
-                    {
-                        TypeId = (int)MediaType.GameCoverImage,
-                        Name = updateGameRequest.CoverImage.Name,
-                        EntityId = entity.Id,
-                        Url = updateGameRequest.CoverImage.Url
-                    });
-            }
             await _gameRepository.SaveAsync();
 
             return new SuccessResult();
@@ -127,26 +89,18 @@ namespace Business.Services.Concrete
 
         public async Task<IResult> UploadImagesAsync(UploadGameImagesRequest request)
         {
-            var gameImages = await _mediaRepository.GetListAsync(f => f.EntityId == request.EntityId && f.TypeId == (int)MediaType.GameImage);
-            var matchesResult = BusinessHelper.GetMatchesList(gameImages.Select(s => s.Name), request.Images.Select(s => s.Name));
-
-            var removedImages = gameImages.Where(f => matchesResult.MisMatchesSource.Contains(f.Name));
-            var newImages = matchesResult.MisMatchesCluster.Select(s => new Media
+            var newImages = request.Images.Select(s => new GameImage
             {
-                TypeId = (int)MediaType.GameImage,
-                EntityId = request.EntityId,
-                Url = request.Images.Single(f => f.Name == s).Url,
-                Name = s
+                GameId = request.EntityId,
+                Name = s.Name,
+                Url = s.Url,
+                Priority = s.Priority
             });
 
-            if (removedImages.Any()) await _mediaRepository.DeleteRangeAsync(removedImages);
-            if (newImages.Any()) await _mediaRepository.AddRangeAsync(newImages);
+            await _gameImageRepository.AddRangeAsync(newImages);
+            await _gameRepository.SaveAsync();
 
-            if (newImages.Any() || removedImages.Any())
-                await _mediaRepository.SaveAsync();
-
-
-            return new SuccessResult();
+            return new SuccessResult("Upload is successful");
         }
     }
 }

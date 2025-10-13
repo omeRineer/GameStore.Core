@@ -55,12 +55,12 @@ namespace Business.Services.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleMenuResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<MenuResponse>> GetAsync(Guid id)
         {
             var entity = await _menuRepository.GetSingleAsync(f => f.Id == id);
-            var mappedEntity = _mapper.Map<SingleMenuResponse>(entity);
+            var mappedEntity = _mapper.Map<MenuResponse>(entity);
 
-            return new SuccessDataResult<SingleMenuResponse>(mappedEntity);
+            return new SuccessDataResult<MenuResponse>(mappedEntity);
         }
 
         public async Task<IDataResult<GetMenusResponse>> GetListAsync()
@@ -69,7 +69,7 @@ namespace Business.Services.Concrete
 
             var result = new GetMenusResponse
             {
-                Menus = menuList.Select(s => new GetMenus_Item
+                Menus = menuList.Select(s => new MenuResponse
                 {
                     Id = s.Id,
                     Code = s.Code,
@@ -113,7 +113,7 @@ namespace Business.Services.Concrete
                                                               includes: i => i.Include(x => x.Permissions));
             var result = new GetMenusResponse
             {
-                Menus = menuList.Select(s => new GetMenus_Item
+                Menus = menuList.Select(s => new MenuResponse
                 {
                     Id = s.Id,
                     ParentMenuId = s.ParentMenuId,

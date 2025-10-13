@@ -68,16 +68,16 @@ namespace Business.Services.Concrete.Identity
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<SingleRoleResponse>> GetAsync(Guid id)
+        public async Task<IDataResult<RoleResponse>> GetAsync(Guid id)
         {
             var role = await _roleRepository.GetSingleOrDefaultAsync(f => f.Id == id);
 
             if (role == null)
-                return new ErrorDataResult<SingleRoleResponse>("Rol bilgisi bulunamadı");
+                return new ErrorDataResult<RoleResponse>("Rol bilgisi bulunamadı");
 
-            var result = _mapper.Map<SingleRoleResponse>(role);
+            var result = _mapper.Map<RoleResponse>(role);
 
-            return new SuccessDataResult<SingleRoleResponse>(result);
+            return new SuccessDataResult<RoleResponse>(result);
         }
 
         public async Task<IResult> CreateAsync(CreateRoleRequest request)
@@ -129,7 +129,7 @@ namespace Business.Services.Concrete.Identity
 
             var result = new GetRolesResponse
             {
-                Roles = roles.Select(s => new GetRoles_Item
+                Roles = roles.Select(s => new RoleResponse
                 {
                     Id = s.Id,
                     Name = s.Name,

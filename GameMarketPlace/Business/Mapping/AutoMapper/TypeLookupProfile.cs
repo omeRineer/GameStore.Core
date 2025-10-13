@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete.ProcessGroups;
+using Models.Lookup;
 using Models.SliderContent;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Business.Mapping.AutoMapper
         public TypeLookupProfile()
         {
             #region Rest
-            CreateMap<TypeLookup, SingleSliderContent_Type>().ReverseMap();
+            CreateMap<TypeLookup, LookupResponse>();
             #endregion
         }
     }

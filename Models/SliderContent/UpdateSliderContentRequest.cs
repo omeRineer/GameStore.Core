@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Media;
 
 namespace Models.SliderContent
 {
@@ -11,7 +10,7 @@ namespace Models.SliderContent
         public string? To { get; set; }
         public bool IsActive { get; set; }
         public int Priority { get; set; }
-        public PostMediaModel? CoverImage { get; set; }
+        public string? CoverImage { get; set; }
     }
 
 }

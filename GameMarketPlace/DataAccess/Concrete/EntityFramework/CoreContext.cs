@@ -27,7 +27,6 @@ namespace DataAccess.Concrete.EntityFramework
                                        types: new Type[]
                                        {
                                            typeof(LogType),
-                                           typeof(MediaType),
                                            typeof(SliderType)
                                        });
             modelBuilder.UserIdentity();

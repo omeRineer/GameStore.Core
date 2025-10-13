@@ -11,7 +11,7 @@ namespace Business.Services.Abstract.Identity
 {
     public interface IPermissionService
     {
-        Task<IDataResult<SinglePermissionResponse>> GetAsync(Guid id);
+        Task<IDataResult<PermissionResponse>> GetAsync(Guid id);
         Task<IDataResult<GetPermissionsResponse>> GetListAsync();
         Task<IResult> CreateAsync(CreatePermissionRequest request);
         Task<IResult> UpdateAsync(UpdatePermissionRequest request);

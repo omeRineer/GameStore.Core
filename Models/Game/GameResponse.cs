@@ -1,5 +1,4 @@
 ﻿using Models.Category;
-using Models.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,9 @@ namespace Models.Game
         public string? Content { get; set; }
         public decimal Price { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public MediaResponse? CoverImage { get; set; }
+        public string? CoverImage { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime EditDate { get; set; }
 
         public CategoryResponse Category { get; set; }
     }
