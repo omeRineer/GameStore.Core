@@ -11,7 +11,7 @@ namespace Business.Mapping.AutoMapper
 {
     public class GameImageProfile : Profile
     {
-        protected GameImageProfile()
+        public GameImageProfile()
         {
             CreateMap<GameImage, GameImageResponse>();
         }

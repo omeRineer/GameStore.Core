@@ -17,9 +17,10 @@ namespace Business.Services.Concrete.Web
         readonly IEfSliderContentRepository _efSliderContentRepository;
         readonly IMapper Mapper;
 
-        public SliderContentWebService(IEfSliderContentRepository efSliderContentRepository)
+        public SliderContentWebService(IEfSliderContentRepository efSliderContentRepository, IMapper mapper)
         {
             _efSliderContentRepository = efSliderContentRepository;
+            Mapper = mapper;
         }
 
         public async Task<IDataResult<ListResponse<SliderContentResponse>>> GetListAsync()
