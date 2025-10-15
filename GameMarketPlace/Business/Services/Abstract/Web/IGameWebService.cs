@@ -12,6 +12,6 @@ namespace Business.Services.Abstract.Web
     public interface IGameWebService
     {
         Task<IDataResult<GameDetailResponse>> GetAsync(Guid id);
-        Task<IDataResult<ListResponse<GameResponse>>> GetListAsync();
+        Task<IDataResult<PaginationResponse<GameResponse>>> GetListByPage(PaginationRequest req);
     }
 }

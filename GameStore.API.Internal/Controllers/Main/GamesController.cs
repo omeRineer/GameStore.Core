@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using GameStore.API.Web.Controllers.Base;
 using MeArch.Module.Security.Filters;
 using Models.Game;
-using Models.GameImage;
 
 namespace GameStore.API.Web.Controllers.Main
 {

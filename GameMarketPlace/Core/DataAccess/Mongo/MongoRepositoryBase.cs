@@ -63,13 +63,12 @@ namespace Core.DataAccess.Mongo
         public async Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
             => await Collection.Find(filter).FirstOrDefaultAsync();
 
-        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
+        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             IQueryable<TEntity> query = Collection.AsQueryable();
 
             if (filter != null) query = query.Where(filter);
             if (orderBy != null) query = orderBy(query);
-            if (paginationParameter != null) query = query.Skip(paginationParameter.Value.Page * paginationParameter.Value.Size).Take(paginationParameter.Value.Size);
 
             return await Task.FromResult(query.ToList());
         }

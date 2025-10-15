@@ -18,7 +18,6 @@ using Models.Blog;
 using Business.Helpers;
 using MeArch.Module.Security.Entities.Master;
 using DataAccess.Concrete.EntityFramework.General.Identity;
-using Models.GameImage;
 using Models.Common;
 
 namespace Business.Services.Concrete

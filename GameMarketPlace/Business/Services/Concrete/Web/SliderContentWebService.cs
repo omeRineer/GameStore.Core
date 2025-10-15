@@ -3,6 +3,7 @@ using Business.Services.Abstract.Web;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General;
 using Entities.Enum.Type;
+using Entities.Main;
 using Microsoft.EntityFrameworkCore;
 using Models.Common;
 using Models.SliderContent;
@@ -25,9 +26,18 @@ namespace Business.Services.Concrete.Web
 
         public async Task<IDataResult<ListResponse<SliderContentResponse>>> GetListAsync()
         {
-            var data = await _efSliderContentRepository.GetListAsync(includes: i=> i.Include(x=> x.SliderType));
+            var data = await _efSliderContentRepository.GetListAsync(f=> f.IsActive, includes: i=> i.Include(x=> x.SliderType));
 
-            var collection = Mapper.Map<List<SliderContentResponse>>(data);
+            List<SliderContent> filteredData = new();
+            filteredData.AddRange(data.Where(f => f.SliderTypeId == (int)SliderType.SliderSideItem)
+                                            .OrderByDescending(o => o.CreateDate)
+                                            .ThenByDescending(o => o.Priority)
+                                            .Take(4));
+            filteredData.AddRange(data.Where(f => f.SliderTypeId == (int)SliderType.SliderItem)
+                                            .OrderByDescending(o => o.CreateDate)
+                                            .ThenByDescending(o => o.Priority));
+
+            var collection = Mapper.Map<List<SliderContentResponse>>(filteredData);
 
             var result = new ListResponse<SliderContentResponse>(collection);
 

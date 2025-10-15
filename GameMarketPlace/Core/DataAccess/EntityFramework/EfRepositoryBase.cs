@@ -24,9 +24,6 @@ namespace Core.DataAccess.EntityFramework
 
         #region Sync
 
-        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
-            => GetList(filter, null, orderBy, paginationParameter, false);
-
         public TEntity GetFirst(Expression<Func<TEntity, bool>> filter)
             => GetFirst(filter, null, false);
 
@@ -101,7 +98,6 @@ namespace Core.DataAccess.EntityFramework
         public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null,
                                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                    PaginationParameter? paginationParameter = null,
                                     bool isTracking = true)
         {
             IQueryable<TEntity> query = Table.AsQueryable();
@@ -110,9 +106,28 @@ namespace Core.DataAccess.EntityFramework
             if (filter != null) query = query.Where(filter);
             if (includes != null) query = includes(query);
             if (orderBy != null) query = orderBy(query);
-            if (paginationParameter != null) query = query.Skip(paginationParameter.Value.Page * paginationParameter.Value.Size).Take(paginationParameter.Value.Size);
 
             return query.ToList();
+        }
+
+        public PageData<TEntity> GetListByPagination(PaginationParameter paginationParameter, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool isTracking = true)
+        {
+            IQueryable<TEntity> query = Table.AsQueryable();
+            PageData<TEntity> pageData = new PageData<TEntity>
+            {
+                Page = paginationParameter.Page,
+                Size = paginationParameter.Size,
+                TotalCount = query.Count()
+            };
+
+            if (!isTracking) query = query.AsNoTracking();
+            if (filter != null) query = query.Where(filter);
+            if (includes != null) query = includes(query);
+            if (orderBy != null) query = orderBy(query);
+            
+            pageData.Data = query.Skip(paginationParameter.Page * paginationParameter.Size).Take(paginationParameter.Size).ToList();
+
+            return pageData;
         }
 
         public bool IsExist(Expression<Func<TEntity, bool>> expression)
@@ -177,7 +192,6 @@ namespace Core.DataAccess.EntityFramework
         public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null,
                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                      PaginationParameter? paginationParameter = null,
                                                       bool isTracking = true)
         {
             IQueryable<TEntity> query = Table.AsQueryable();
@@ -186,9 +200,28 @@ namespace Core.DataAccess.EntityFramework
             if (filter != null) query = query.Where(filter);
             if (includes != null) query = includes(query);
             if (orderBy != null) query = orderBy(query);
-            if (paginationParameter != null) query = query.Skip(paginationParameter.Value.Page * paginationParameter.Value.Size).Take(paginationParameter.Value.Size);
 
             return await query.ToListAsync();
+        }
+
+        public async Task<PageData<TEntity>> GetListByPaginationAsync(PaginationParameter paginationParameter, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool isTracking = true)
+        {
+            IQueryable<TEntity> query = Table.AsQueryable();
+            PageData<TEntity> pageData = new PageData<TEntity>
+            {
+                Page = paginationParameter.Page,
+                Size = paginationParameter.Size,
+                TotalCount = query.Count()
+            };
+
+            if (!isTracking) query = query.AsNoTracking();
+            if (filter != null) query = query.Where(filter);
+            if (includes != null) query = includes(query);
+            if (orderBy != null) query = orderBy(query);
+
+            pageData.Data = await query.Skip(paginationParameter.Page * paginationParameter.Size).Take(paginationParameter.Size).ToListAsync();
+
+            return pageData;
         }
 
         public async Task<Dictionary<TK, TV>> GetDictionariesAsync<TK, TV>(Func<TEntity, TK> key, Func<TEntity, TV> value, Expression<Func<TEntity, bool>> filter = null)
@@ -300,8 +333,8 @@ namespace Core.DataAccess.EntityFramework
             await Task.CompletedTask;
         }
 
-        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
-            => await GetListAsync(filter, null, orderBy, paginationParameter, false);
+        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+            => await GetListAsync(filter, null, orderBy, false);
 
         public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
             => await GetFirstOrDefaultAsync(filter, null, false);
@@ -327,6 +360,11 @@ namespace Core.DataAccess.EntityFramework
             Table.RemoveRange(entities);
 
             await Task.CompletedTask;
+        }
+
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, PaginationParameter? paginationParameter = null)
+        {
+            throw new NotImplementedException();
         }
 
 

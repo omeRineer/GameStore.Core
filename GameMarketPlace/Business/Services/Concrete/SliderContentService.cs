@@ -70,7 +70,7 @@ namespace Business.Services.Concrete
             var entity = await _sliderContentRepository.GetSingleAsync(f => f.Id == request.Id);
             var mappedEntity = _mapper.Map(request, entity);
 
-            await _sliderContentRepository.UpdateAsync(entity);
+            await _sliderContentRepository.UpdateAsync(mappedEntity);
             await _sliderContentRepository.SaveAsync();
 
             return new SuccessResult();

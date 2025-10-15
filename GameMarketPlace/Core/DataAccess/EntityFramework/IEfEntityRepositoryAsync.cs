@@ -16,8 +16,13 @@ namespace Core.DataAccess.EntityFramework
         Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null,
                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                   PaginationParameter? paginationParameter = null,
                                    bool isTracking = true);
+
+        Task<PageData<TEntity>> GetListByPaginationAsync(PaginationParameter paginationParameter, 
+                                         Expression<Func<TEntity, bool>> filter = null,
+                                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
+                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                         bool isTracking = true);
 
         Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter,
                          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,

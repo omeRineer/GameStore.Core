@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Services.Abstract.Web;
+using Core.Entities.DTO.Pagination;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General;
 using Microsoft.EntityFrameworkCore;
@@ -36,15 +37,20 @@ namespace Business.Services.Concrete.Web
             return new SuccessDataResult<GameDetailResponse>(result);
         }
 
-        public async Task<IDataResult<ListResponse<GameResponse>>> GetListAsync()
+        public async Task<IDataResult<PaginationResponse<GameResponse>>> GetListByPage(PaginationRequest req)
         {
-            var data = await _gameRepository.GetListAsync(includes: i => i.Include(x => x.Category));
+            var paginationData = await _gameRepository.GetListByPaginationAsync(includes: i => i.Include(x => x.Category),
+                                                                      paginationParameter: new PaginationParameter
+                                                                      {
+                                                                          Page = req.Page,
+                                                                          Size = req.Size
+                                                                      });
 
-            var collection = Mapper.Map<List<GameResponse>>(data);
+            var collection = Mapper.Map<List<GameResponse>>(paginationData.Data);
 
-            var result = new ListResponse<GameResponse>(collection);
+            var result = new PaginationResponse<GameResponse>(collection, paginationData.TotalCount, paginationData.Page, paginationData.Size);
 
-            return new SuccessDataResult<ListResponse<GameResponse>>(result);
+            return new SuccessDataResult<PaginationResponse<GameResponse>>(result);
         }
     }
 }

@@ -3,6 +3,7 @@ using Business.Services.Abstract.Web;
 using GameStore.API.Web.Controllers.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.Common;
 
 namespace GameStore.API.Web.Controllers
 {
@@ -15,10 +16,10 @@ namespace GameStore.API.Web.Controllers
             GameWebService = gameWebService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetListAsync()
+        [HttpPost]
+        public async Task<IActionResult> GetListAsync(PaginationRequest req)
         {
-            var result = await GameWebService.GetListAsync();
+            var result = await GameWebService.GetListByPage(req);
 
             return Result(result);
         }

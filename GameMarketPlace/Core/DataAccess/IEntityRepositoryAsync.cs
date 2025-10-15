@@ -13,8 +13,7 @@ namespace Core.DataAccess
         where TEntity : class, IEntity<TKey>, new()
     {
         Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null,
-                                   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                   PaginationParameter? paginationParameter = null);
+                                   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
 
         Task<Dictionary<TK, TV>> GetDictionariesAsync<TK, TV>(Func<TEntity, TK> key,
                                                                     Func<TEntity, TV> value,
