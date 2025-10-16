@@ -53,20 +53,12 @@ builder.Services.AddControllers()
                 .AddOData(options =>
                 {
                     options.EnableQueryFeatures();
-                    options.AddRouteComponents("odata", GetEdmModel());
+                    options.AddRouteComponents("odataapi", GetEdmModel());
                 });
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 StaticServiceProvider.CreateInstance(app.Services.GetService<IServiceScopeFactory>());
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseCors();
 

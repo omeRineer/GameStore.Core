@@ -1,0 +1,6 @@
+@GameStore.API.Proxy_HostAddress = http://localhost:5084
+
+GET {{GameStore.API.Proxy_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
