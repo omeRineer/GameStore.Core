@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Category;
 using Models.Identity.Menu;
-using Models.Identity.Role;
 
 namespace GameStore.API.Web.Controllers.Main
 {
@@ -20,7 +19,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet]
-        [Authorize("SuperAdmin,API.Web.Menus.GetList")]
+        [Authorize("API.Web.Menus.GetList")]
         public async Task<IActionResult> GetListAsync()
         {
             var result = await _menuService.GetListAsync();
@@ -47,7 +46,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,API.Web.Menus.Create")]
+        [Authorize("API.Web.Menus.Create")]
         public async Task<IActionResult> CreateAsync(CreateMenuRequest request)
         {
             var result = await _menuService.CreateAsync(request);
@@ -56,7 +55,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,API.Web.Menus.Delete")]
+        [Authorize("API.Web.Menus.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _menuService.DeleteAsync(id);
@@ -65,28 +64,10 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,API.Web.Menus.Update")]
+        [Authorize("API.Web.Menus.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateMenuRequest request)
         {
             var result = await _menuService.UpdateAsync(request);
-
-            return Result(result);
-        }
-
-        [HttpPost("SetPermissions")]
-        [Authorize("SuperAdmin,API.Web.Menus.SetPermissions")]
-        public async Task<IActionResult> SetPermissionsAsync(SetMenuPermissionsRequest request)
-        {
-            var result = await _menuService.SetPermissionsAsync(request);
-
-            return Result(result);
-        }
-
-        [HttpGet("GetPermissions/{id}")]
-        [Authorize("SuperAdmin,API.Web.Menus.GetPermissions")]
-        public async Task<IActionResult> GetPermissionsAsync(Guid id)
-        {
-            var result = await _menuService.GetPermissionsAsync(id);
 
             return Result(result);
         }

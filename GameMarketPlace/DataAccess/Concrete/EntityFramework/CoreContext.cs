@@ -28,9 +28,9 @@ namespace DataAccess.Concrete.EntityFramework
                                        {
                                            typeof(LogType),
                                            typeof(SliderType)
-                                       });
-            modelBuilder.UserIdentity();
-            modelBuilder.MenuItems();
+                                       });;
+            modelBuilder.Entity<Menu>()
+                        .ToTable("Menus");
 
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CoreContext).Assembly);

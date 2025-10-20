@@ -30,10 +30,10 @@ namespace Core.DataAccess.EntityFramework
         public TEntity GetSingle(Expression<Func<TEntity, bool>> filter)
             => GetSingle(filter, null, false);
 
-        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter)
+        public TEntity? GetFirstOrDefault(Expression<Func<TEntity, bool>> filter)
             => GetFirstOrDefault(filter, null, false);
 
-        public TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> filter)
+        public TEntity? GetSingleOrDefault(Expression<Func<TEntity, bool>> filter)
             => GetSingleOrDefault(filter, null, false);
 
         public void Delete(TKey id)
@@ -47,7 +47,7 @@ namespace Core.DataAccess.EntityFramework
             var entities = Table.Where(f => ids.Contains(f.Id));
             DeleteRange(entities);
         }
-        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter,
+        public TEntity? GetFirstOrDefault(Expression<Func<TEntity, bool>> filter,
                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                            bool isTracking = true)
         {
@@ -336,10 +336,10 @@ namespace Core.DataAccess.EntityFramework
         public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
             => await GetListAsync(filter, null, orderBy, false);
 
-        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
             => await GetFirstOrDefaultAsync(filter, null, false);
 
-        public async Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity?> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
             => await GetSingleOrDefaultAsync(filter, null, false);
 
         public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> filter)

@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.API.Web", "GameSt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proxy", "Proxy", "{9FB87E6E-9855-4333-A743-A0AFB9BE492E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.API.Proxy", "GameStore.API.Proxy\GameStore.API.Proxy.csproj", "{B4EB2327-E200-4E9F-89BF-32A8FDE53FD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.API.Proxy", "GameStore.API.Proxy\GameStore.API.Proxy.csproj", "{B4EB2327-E200-4E9F-89BF-32A8FDE53FD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

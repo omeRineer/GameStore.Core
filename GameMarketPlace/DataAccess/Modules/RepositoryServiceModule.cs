@@ -22,15 +22,7 @@ namespace DataAccess.ServiceModules
             services.AddScoped<IEfSliderContentRepository, EfSliderContentRepository>();
             services.AddScoped<IEfBlogRepository, EfBlogRepository>();
 
-            services.AddScoped<IEfPermissionRepository, EfPermissionRepository>();
             services.AddScoped<IEfMenuRepository, EfMenuRepository>();
-            services.AddScoped<IEfMenuPermissionRepository, EfMenuPermissionRepository>();
-            services.AddScoped<IEfUserRoleRepository, EfUserRoleRepository>();
-            services.AddScoped<IEfUserRepository, EfUserRepository>();
-            services.AddScoped<IEfRoleRepository, EfRoleRepository>();
-            services.AddScoped<IEfRolePermissionRepository, EfRolePermissionRepository>();
-            services.AddScoped<IEfUserPermissionRepository, EfUserPermissionRepository>();
-            services.AddScoped<IEfUserClaimRepository, EfUserClaimRepository>();
 
             services.AddScoped<IEfProcessGroupRepository, EfProcessGroupRepository>();
             services.AddScoped<IEfStatusLookupRepository, EfStatusLookupRepository>();

@@ -8,18 +8,16 @@ namespace Configuration.Models.Options
 {
     public class APIOptions
     {
-        public WebAPIOptions WebAPI { get; set; }
-        public ODataAPIOptions ODataAPI { get; set; }
-    }
-    public class WebAPIOptions
-    {
-        public string ApiUrl { get; set; }
-        public string BaseUrl { get; set; }
-    }
+        public ApiParams WebApi { get; set; }
+        public ApiParams ODataApi { get; set; }
+        public ApiParams InternalApi { get; set; }
+        public ApiParams IdentityApi { get; set; }
+        public ApiParams MetaApi { get; set; }
 
-    public class ODataAPIOptions
-    {
-        public string ApiUrl { get; set; }
-        public string BaseUrl { get; set; }
+        public class ApiParams
+        {
+            public string ApiUrl { get; set; }
+            public string BaseUrl { get; set; }
+        }
     }
 }

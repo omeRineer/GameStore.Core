@@ -23,19 +23,19 @@ namespace Core.DataAccess.EntityFramework
                                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                          bool isTracking = true);
 
-        TEntity? GetFirst(Expression<Func<TEntity, bool>> filter,
+        TEntity GetFirst(Expression<Func<TEntity, bool>> filter,
                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                     bool isTracking = true);
 
-        TEntity? GetSingle(Expression<Func<TEntity, bool>> filter,
+        TEntity GetSingle(Expression<Func<TEntity, bool>> filter,
                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                     bool isTracking = true);
 
-        TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter,
+        TEntity? GetFirstOrDefault(Expression<Func<TEntity, bool>> filter,
                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                     bool isTracking = true);
 
-        TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> filter,
+        TEntity? GetSingleOrDefault(Expression<Func<TEntity, bool>> filter,
                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
                     bool isTracking = true);
         void ExecuteSql(string query, params object[] parameters);

@@ -17,7 +17,6 @@ using Configuration;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using MeArch.Module.Security.Entities.Master;
-using MeArch.Module.Security.Entities.Menu;
 
 #region Edm Models
 static IEdmModel GetEdmModel()

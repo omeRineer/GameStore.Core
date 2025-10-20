@@ -19,13 +19,13 @@ namespace Core.DataAccess
         Dictionary<TK, TV> GetDictionaries<TK, TV>(Func<TEntity, TK> key,
                                                    Func<TEntity, TV> value,
                                                    Expression<Func<TEntity, bool>> filter = null);
-        TEntity? GetFirst(Expression<Func<TEntity, bool>> filter);
+        TEntity GetFirst(Expression<Func<TEntity, bool>> filter);
 
-        TEntity? GetSingle(Expression<Func<TEntity, bool>> filter);
+        TEntity GetSingle(Expression<Func<TEntity, bool>> filter);
 
-        TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter);
+        TEntity? GetFirstOrDefault(Expression<Func<TEntity, bool>> filter);
 
-        TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> filter);
+        TEntity? GetSingleOrDefault(Expression<Func<TEntity, bool>> filter);
 
         bool IsExist(Expression<Func<TEntity, bool>> expression);
 

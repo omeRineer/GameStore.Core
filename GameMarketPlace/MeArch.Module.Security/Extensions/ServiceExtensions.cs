@@ -1,5 +1,4 @@
 ﻿using MeArch.Module.Security.Entities.Master;
-using MeArch.Module.Security.Entities.Menu;
 using MeArch.Module.Security.Model.Options;
 using MeArch.Module.Security.Service;
 using Microsoft.EntityFrameworkCore;
@@ -55,11 +54,8 @@ namespace MeArch.Module.Security.Extensions
 
         public static ModelBuilder MenuItems(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Menu>()
-                        .ToTable("Menus");
+            
 
-            modelBuilder.Entity<MenuPermission>()
-                        .ToTable("MenuPermission");
 
             return modelBuilder;
         }

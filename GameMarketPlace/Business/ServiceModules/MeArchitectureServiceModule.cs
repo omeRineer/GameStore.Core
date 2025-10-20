@@ -35,8 +35,6 @@ namespace Business.ServiceModules
                 options.UseSqlServer(CoreConfiguration.DataBaseOptions.ConnectionString);
             });
 
-
-
             services.AddCors(options =>
                             options.AddDefaultPolicy(builder =>
                             builder.AllowAnyHeader()
@@ -52,24 +50,6 @@ namespace Business.ServiceModules
             services.AddScoped(i => new ImagekitClient(CoreConfiguration.ImagekitOptions.PublicApiKey,
                                                        CoreConfiguration.ImagekitOptions.PrivateApiKey,
                                                        CoreConfiguration.ImagekitOptions.Url));
-
-            #region Json Web Token Options
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                            .AddJwtBearer(opt =>
-                        {
-                            opt.TokenValidationParameters = new TokenValidationParameters
-                            {
-                                ValidateIssuer = true,
-                                ValidateAudience = true,
-                                ValidateLifetime = true,
-                                ValidateIssuerSigningKey = true,
-
-                                ValidIssuer = CoreConfiguration.TokenOptions.Issuer,
-                                ValidAudience = CoreConfiguration.TokenOptions.Audience,
-                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(CoreConfiguration.TokenOptions.SecurityKey))
-
-                            };
-                        });
 
             services.AddScoped<CurrentUser>(i =>
             {
@@ -99,15 +79,6 @@ namespace Business.ServiceModules
 
                 return new CurrentUser();
             });
-
-            services.AddTokenService(options =>
-            {
-                options.Audience = CoreConfiguration.TokenOptions.Audience;
-                options.Issuer = CoreConfiguration.TokenOptions.Issuer;
-                options.ExpirationTime = CoreConfiguration.TokenOptions.ExpirationTime;
-                options.SecurityKey = CoreConfiguration.TokenOptions.SecurityKey;
-            });
-            #endregion
 
         }
     }

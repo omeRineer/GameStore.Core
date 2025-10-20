@@ -1,9 +1,7 @@
 ﻿using Business.Services;
 using Business.Services.Abstract;
-using Business.Services.Abstract.Identity;
 using Business.Services.Abstract.Lookup;
 using Business.Services.Concrete;
-using Business.Services.Concrete.Identity;
 using Business.Services.Concrete.Lookup;
 using Business.Services.External;
 using Business.Services.Internal;
@@ -39,12 +37,6 @@ namespace Business.ServiceModules
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ISliderContentService, SliderContentService>();
             services.AddScoped<ImageKitStorageService>();
-
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IProfileService, ProfileService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IPermissionService, PermissionService>();
 
             services.AddScoped<ILookupService, LookupService>();
         }

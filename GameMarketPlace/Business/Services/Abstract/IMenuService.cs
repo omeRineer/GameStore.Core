@@ -1,7 +1,6 @@
 ﻿using Core.Utilities.ResultTool;
 using Models.Category;
 using Models.Identity.Menu;
-using Models.Identity.Role;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +17,5 @@ namespace Business.Services.Abstract
         Task<IResult> CreateAsync(CreateMenuRequest request);
         Task<IResult> UpdateAsync(UpdateMenuRequest request);
         Task<IResult> DeleteAsync(Guid id);
-        Task<IResult> SetPermissionsAsync(SetMenuPermissionsRequest request);
-        Task<IDataResult<GetMenuPermissionsResponse>> GetPermissionsAsync(Guid id);
     }
 }

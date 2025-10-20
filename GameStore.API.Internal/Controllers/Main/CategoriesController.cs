@@ -17,7 +17,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("{id}")]
-        [Authorize("SuperAdmin,API.Web.Categories.Get")]
+        [Authorize("API.Web.Categories.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _categoryService.GetAsync(id);
@@ -26,7 +26,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,API.Web.Categories.Create")]
+        [Authorize("API.Web.Categories.Create")]
         public async Task<IActionResult> CreateAsync(CreateCategoryRequest request)
         {
             var result = await _categoryService.CreateAsync(request);
@@ -35,7 +35,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,API.Web.Categories.Delete")]
+        [Authorize("API.Web.Categories.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _categoryService.DeleteAsync(id);
@@ -44,7 +44,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,API.Web.Categories.Update")]
+        [Authorize("API.Web.Categories.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateCategoryRequest request)
         {
             var result = await _categoryService.UpdateAsync(request);

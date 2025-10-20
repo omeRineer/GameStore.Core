@@ -17,7 +17,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("{id}")]
-        [Authorize("SuperAdmin,Blogger,API.Web.Blogs.Get")]
+        [Authorize("Blogger,API.Web.Blogs.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _blogService.GetAsync(id);
@@ -26,7 +26,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,Blogger,API.Web.Blogs.Create")]
+        [Authorize("Blogger,API.Web.Blogs.Create")]
         public async Task<IActionResult> CreateAsync(CreateBlogRequest request)
         {
             var result = await _blogService.CreateAsync(request);
@@ -35,7 +35,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,Blogger,API.Web.Blogs.Delete")]
+        [Authorize("Blogger,API.Web.Blogs.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _blogService.DeleteAsync(id);
@@ -44,7 +44,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,Blogger,API.Web.Blogs.Update")]
+        [Authorize("Blogger,API.Web.Blogs.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateBlogRequest request)
         {
             var result = await _blogService.UpdateAsync(request);

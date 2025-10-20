@@ -17,6 +17,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("{id}")]
+        [Authorize("API.Web.Games.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _gameService.GetAsync(id);
@@ -25,7 +26,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,API.Web.Games.Create")]
+        [Authorize("API.Web.Games.Create")]
         public async Task<IActionResult> CreateAsync(CreateGameRequest request)
         {
             var result = await _gameService.CreateAsync(request);
@@ -34,7 +35,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,API.Web.Games.Delete")]
+        [Authorize("API.Web.Games.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _gameService.DeleteAsync(id);
@@ -43,7 +44,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,API.Web.Games.Update")]
+        [Authorize("API.Web.Games.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateGameRequest request)
         {
             var result = await _gameService.UpdateAsync(request);
@@ -52,7 +53,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("UploadImages")]
-        [Authorize("SuperAdmin,API.Web.Games.UploadImages")]
+        [Authorize("API.Web.Games.UploadImages")]
         public async Task<IActionResult> UploadImagesAsync(UploadGameImagesRequest request)
         {
             var result = await _gameService.UploadImagesAsync(request);
@@ -61,7 +62,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("GetImages/{id}")]
-        [Authorize("SuperAdmin,API.Web.Games.GetImages")]
+        [Authorize("API.Web.Games.GetImages")]
         public async Task<IActionResult> GetImagesAsync([FromRoute] Guid id)
         {
             var result = await _gameService.GetImagesAsync(id);

@@ -18,7 +18,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpGet("{id}")]
-        [Authorize("SuperAdmin,API.Web.SliderContents.Get")]
+        [Authorize("API.Web.SliderContents.Get")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id)
         {
             var result = await _sliderContentService.GetAsync(id);
@@ -27,7 +27,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Create")]
-        [Authorize("SuperAdmin,API.Web.SliderContents.Create")]
+        [Authorize("API.Web.SliderContents.Create")]
         public async Task<IActionResult> CreateAsync(CreateSliderContentRequest request)
         {
             var result = await _sliderContentService.CreateAsync(request);
@@ -36,7 +36,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize("SuperAdmin,API.Web.SliderContents.Delete")]
+        [Authorize("API.Web.SliderContents.Delete")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var result = await _sliderContentService.DeleteAsync(id);
@@ -45,7 +45,7 @@ namespace GameStore.API.Web.Controllers.Main
         }
 
         [HttpPost("Update")]
-        [Authorize("SuperAdmin,API.Web.SliderContents.Update")]
+        [Authorize("API.Web.SliderContents.Update")]
         public async Task<IActionResult> UpdateAsync(UpdateSliderContentRequest request)
         {
             var result = await _sliderContentService.UpdateAsync(request);
