@@ -20,13 +20,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(container => container.RegisterModule<AutofacDependencyResolversModule>());
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                            .AddJwtBearer(opt =>
-                            {
-                                opt.Authority = CoreConfiguration.APIOptions.IdentityApi.BaseUrl;
-                                opt.Audience = CoreConfiguration.TokenOptions.InternalApi.Audience;
-                            });
-
 //await builder.Services.AddRabbitMqAsync();
 builder.Services.AddServiceModules(new IServiceModule[]
 {

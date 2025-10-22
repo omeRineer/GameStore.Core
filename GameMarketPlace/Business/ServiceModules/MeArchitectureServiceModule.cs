@@ -51,6 +51,25 @@ namespace Business.ServiceModules
                                                        CoreConfiguration.ImagekitOptions.PrivateApiKey,
                                                        CoreConfiguration.ImagekitOptions.Url));
 
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                            .AddJwtBearer(opt =>
+                            {
+                                opt.TokenValidationParameters = new TokenValidationParameters
+                                {
+                                    ValidateIssuer = true,
+                                    ValidateAudience = true,
+                                    ValidateLifetime = true,
+                                    ValidateIssuerSigningKey = true,
+
+                                    ValidIssuer = CoreConfiguration.TokenOptions.Issuer,
+                                    ValidAudience = CoreConfiguration.TokenOptions.Audience,
+                                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(CoreConfiguration.TokenOptions.SecurityKey))
+
+                                };
+                            });
+
+
             services.AddScoped<CurrentUser>(i =>
             {
                 var httpContextAccessor = i.GetService<IHttpContextAccessor>();
