@@ -25,7 +25,6 @@ namespace Configuration
 
         public static DataBaseOptions DataBaseOptions { get => Configuration.GetSection("DataBaseOptions").Get<DataBaseOptions>(); }
         public static TokenOptions TokenOptions { get => Configuration.GetSection("TokenOptions").Get<TokenOptions>(); }
-        public static APIOptions APIOptions { get => Configuration.GetSection("APIOptions").Get<APIOptions>(); }
         public static RabbitMqOptions RabbitMqOptions { get => Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>(); }
         public static ImagekitOptions ImagekitOptions { get => Configuration.GetSection("ImagekitOptions").Get<ImagekitOptions>(); }
 
