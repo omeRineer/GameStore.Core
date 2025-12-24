@@ -12,7 +12,6 @@ using AutoMapper;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Entities.Enum.Type;
-using Business.Helpers;
 using Models.SliderContent;
 using Models.Blog;
 

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Business.Helpers;
 using Business.Services.Abstract;
 using Core.Utilities.ResultTool;
 using DataAccess.Concrete.EntityFramework.General.Identity;
@@ -80,56 +79,24 @@ namespace Business.Services.Concrete
 
         public async Task<IDataResult<GetMenusResponse>> GetSessionMenusAsync()
         {
-            //var user = await _userRepository.GetSingleAsync(f => f.Id == CurrentUser.Id, i => i.Include(x => x.UserRoles).ThenInclude(x => x.Role).ThenInclude(x => x.RolePermissions).Include(x => x.UserPermissions));
-            //var userRoles = user.UserRoles.Select(s => s.RoleId);
+            var menuList = await _menuRepository.GetListAsync(f => CurrentUser.Permissions.Contains(f.Permission) || string.IsNullOrEmpty(f.Permission));
+            var result = new GetMenusResponse
+            {
+                Menus = menuList.Select(s => new MenuResponse
+                {
+                    Id = s.Id,
+                    ParentMenuId = s.ParentMenuId,
+                    Title = s.Title,
+                    Code = s.Code,
+                    Icon = s.Icon,
+                    Path = s.Path,
+                    Priority = s.Priority,
+                    Permission = s.Permission
+                }).ToList()
+            };
 
-            //var userPermissions = new List<Guid>();
-
-            //if (user.UserPermissions != null)
-            //    userPermissions.AddRange(user.UserPermissions.Select(s => s.PermissionId));
-
-            //if (user.UserRoles.SelectMany(s => s.Role.RolePermissions) != null)
-            //    userPermissions.AddRange(user.UserRoles.SelectMany(s => s.Role.RolePermissions).Select(s => s.PermissionId));
-
-            //var menuList = await _menuRepository.GetListAsync(f => f.Permissions.Any(x => userPermissions.Contains(x.PermissionId)),
-            //                                                  includes: i => i.Include(x => x.Permissions));
-            //var result = new GetMenusResponse
-            //{
-            //    Menus = menuList.Select(s => new MenuResponse
-            //    {
-            //        Id = s.Id,
-            //        ParentMenuId = s.ParentMenuId,
-            //        Title = s.Title,
-            //        Code = s.Code,
-            //        Icon = s.Icon,
-            //        Path = s.Path,
-            //        Priority = s.Priority
-            //    }).ToList()
-            //};
-
-            return new SuccessDataResult<GetMenusResponse>();
+            return new SuccessDataResult<GetMenusResponse>(result);
         }
-
-        //public async Task<IResult> SetPermissionsAsync(SetMenuPermissionsRequest request)
-        //{
-        //    var menuPermissions = await _menuPermissionRepository.GetListAsync(f => f.MenuId == request.MenuId);
-        //    var matchesResult = BusinessHelper.GetMatchesList(menuPermissions.Select(s => s.PermissionId), request.Permissions);
-
-        //    var removedMenuPermissions = menuPermissions.Where(f => matchesResult.MisMatchesSource.Contains(f.PermissionId));
-        //    var newMenuPermissions = matchesResult.MisMatchesCluster.Select(s => new MenuPermission
-        //    {
-        //        PermissionId = s,
-        //        MenuId = request.MenuId
-        //    });
-
-        //    if (removedMenuPermissions.Any()) await _menuPermissionRepository.DeleteRangeAsync(removedMenuPermissions);
-        //    if (newMenuPermissions.Any()) await _menuPermissionRepository.AddRangeAsync(newMenuPermissions);
-
-        //    if (newMenuPermissions.Any() || removedMenuPermissions.Any())
-        //        await _menuPermissionRepository.SaveAsync();
-
-        //    return new SuccessResult();
-        //}
 
         public async Task<IResult> UpdateAsync(UpdateMenuRequest request)
         {

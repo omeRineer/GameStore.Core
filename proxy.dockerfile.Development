@@ -17,5 +17,6 @@ RUN dotnet publish "./GameStore.API.Proxy.csproj" -c $BUILD_CONFIGURATION -o /ap
 
 FROM base AS final
 WORKDIR /app
+COPY ./https https/
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "GameStore.API.Proxy.dll"]
